@@ -1,23 +1,19 @@
 import { TaskActionTypes } from './taskActions'
-import uid from 'uid'
 
-const INITIAL = {
-    tasks: null
-}
-
-const TaskReducer = (state = INITIAL, action) => {
+const TaskReducer = (state = [], action) => {
     switch(action.type){
         case TaskActionTypes.ADD_TASK:
             return [
                 ...state,
                 {
-                    id: uid(9),
+                    id: action.payload.id,
                     title: action.payload.title,
                     priority: action.payload.priority,
                     text: action.payload.text,
-                    completed: false
+                    status: "pending"
                 }
             ]
+            
         default:
             return state
     }
