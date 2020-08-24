@@ -10,8 +10,14 @@ const TaskReducer = (state = [], action) => {
                     title: action.payload.title,
                     priority: action.payload.priority,
                     text: action.payload.text,
-                    status: "pending"
+                    status: action.payload.status
                 }
+            ]
+        case TaskActionTypes.SEED:
+            const tasks = action.payload
+            return [
+                ...state,
+                ...tasks
             ]
             
         default:

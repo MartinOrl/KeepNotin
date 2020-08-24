@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom'
 
-import SignIn from './components/sign-in/signIn'
+import SignIn from './components/sign-in/signIn';
 
-import { auth, createUserProfile } from './firebase/firebase'
+import { auth, createUserProfile } from './firebase/firebase';
 
-import Main from './pages/Main'
+import Main from './pages/Main';
 import { selectCurrentUser } from './redux/user/userSelectors';
-import { setCurrentUser} from './redux/user/userActions'
+import { setCurrentUser} from './redux/user/userActions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -29,21 +30,25 @@ class App extends React.Component {
       }
     })
   }
+  
 
   componentWillUnmount(){
     this.unsubscribeFromAuth();
   }
 
-
   render(){
+
     return(
       <div>
-        {
-          this.props.user ? 
-            <Main />
-          : 
-          <SignIn />
-        }
+        <Switch>
+            <Route 
+            path="/" 
+            render={() => 
+              this.props.user ? (<Main />) : (<SignIn/>)
+            
+            }
+              />
+        </Switch>
       </div>
     )
   }

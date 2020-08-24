@@ -1,68 +1,75 @@
 import React from 'react';
-import uid from 'uid';
+import { createStructuredSelector } from 'reselect'
 
 import { connect } from 'react-redux';
 
-import { TasksContainer } from './containerStyles';
+import { TasksHolder } from './containerStyles';
 
-import { AddTask } from '../../redux/tasks/taskActions';
+import { selectCurrentUser } from '../../redux/user/userSelectors';
+
+import TasksContainer from '../TodoContainer/todoContainer'
+import { selectTasks } from '../../redux/tasks/taskSelectors';
+import Spinner from '../spinner/spinner';
+
+import {firestore} from '../../firebase/firebase'
+import { Seed } from '../../redux/tasks/taskActions'
 
 
 class Container extends React.Component{
-    constructor(props){
-        super(props);
 
-        this.state =  {
-            title:"",
-            priority: "",
-            text: ""
 
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    componentDidMount(){
+        const { user, seedRedux, tasks } = this.props
+        // eslint-disable-next-line
+        if(tasks == false){
+            var tasksRef = firestore.collection("users").doc(user.id).collection("tasks").doc("tasks")
+            tasksRef.get().then(doc => {
+                var { tasks } = doc.data();
+                seedRedux(tasks)
+        })}
 
     }
+    
+    getPending = () => {
+        return this.props.tasks.filter(task => task.status === 'Pending')
+    }
+    getInProgress = () => {
+        return this.props.tasks.filter(task => task.status === 'In Progress')
+    }
 
-    handleChange = event => {
-        const {name, value} = event.target;
-        this.setState({
-            [name]: value
-        })
-    };
-
-    handleSubmit = async event => {
-        event.preventDefault()
-        const { addTodo } = this.props
-
-        addTodo({
-            id: uid(9),
-            title: this.state.title,
-            priority: this.state.priority,
-            text: this.state.text
-        })
-    };
-
-
+    getCompleted = () => {
+        return this.props.tasks.filter(task => task.status === 'Completed')
+    }
 
     render(){
+        const pending = this.getPending()
+        const inProgress = this.getInProgress()
+        const completed = this.getCompleted()
         return(
-            <TasksContainer>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
-                    <input type="text" name="priority" value={this.state.priority} onChange={this.handleChange}  placeholder="Priority"  />
-                    <input type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
-                    <input type="submit" />
-                </form>
-                <p>Title: {this.state.title}</p>
-                <div style={{marginTop:"60px"}}>
-                </div>
-            </TasksContainer>
+            <div>
+                {
+                    this.props.tasks 
+                    ?
+                    <TasksHolder>
+                        <TasksContainer tasks={pending} />
+                        <TasksContainer tasks={inProgress} />
+                        <TasksContainer tasks={completed} />
+                    </TasksHolder>
+                    :
+                    <Spinner />
+                }
+            </div>
         )
     }
 };
 
+const mapStateToProps = createStructuredSelector({
+    user: selectCurrentUser,
+    tasks: selectTasks
+})
+
 const mapDispatchToProps = dispatch => ({
-    addTodo: task => dispatch(AddTask(task))
+    seedRedux: tasks => dispatch(Seed(tasks))
 });
 
-export default connect(null, mapDispatchToProps)(Container);
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

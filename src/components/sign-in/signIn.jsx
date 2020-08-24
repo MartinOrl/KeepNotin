@@ -1,6 +1,8 @@
 import React from 'react'
 import { auth } from '../../firebase/firebase'
 
+import { LoginContainer, LoginForm, FormInput, SubmitButton, Title, Subtitle } from './signInStyles'
+
 class SignIn extends React.Component {
     constructor(props){
         super(props)
@@ -36,13 +38,15 @@ class SignIn extends React.Component {
 
     render(){
         return(
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="email" name="email" onChange={this.handleChange} value={this.state.userName} />
-                    <input type="password" name="password" onChange={this.handleChange} value={this.state.password} />
-                    <input type="submit" />
-                </form>
-            </div>
+            <LoginContainer>
+                <Title>Welcome!</Title>
+                <Subtitle>Please, Log In!</Subtitle>
+                <LoginForm onSubmit={this.handleSubmit}>
+                    <FormInput type="email" name="email" onChange={this.handleChange} value={this.state.userName} placeholder='Email'  />
+                    <FormInput type="password" name="password" onChange={this.handleChange} value={this.state.password} placeholder='Password'  />
+                    <SubmitButton type="submit" value="Log In" />
+                </LoginForm>
+            </LoginContainer>
         )
     }
 

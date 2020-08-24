@@ -1,33 +1,35 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
+import Todo from '../todo/todo';
 
-import { connect } from 'react-redux'
+const Container = styled.div`
+    border: 1px solid black;
+    height: 80vh;
+    overflow-y: hidden;
+    margin-top: 30px;
+    width: 450px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+`
 
-import { createStructuredSelector } from 'reselect'
 
-import { selectTasks} from '../../redux/tasks/taskSelectors'
 
-class TodoContainer extends React.PureComponent{
-
-    render(){
-        const {tasks} = this.props
+const TasksContainer = ({tasks}) => {
         return(
-            <div>
+            <Container>
             {
-                tasks.length > 0
-                ?
-                tasks.map(task => (
-                    <p key={task.id}>Title: {task.title}</p>
-                ))
-                :
+                tasks.length > 0 
+                ? 
+                tasks.map(task => {
+                    return <Todo key={task.id} title={task.title} priority={task.priority} text={task.text} status={task.status} />
+                })
+                : 
                 null
             }
-            </div>
+            </Container>
         )
-    }
 }
 
-const mapStateToProps = createStructuredSelector({
-    tasks: selectTasks
-})
-
-export default connect(mapStateToProps)(TodoContainer)
+export default TasksContainer;
