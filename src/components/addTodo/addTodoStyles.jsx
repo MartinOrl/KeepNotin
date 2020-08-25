@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const TaskAddContainer = styled.div`
-    
+    text-align: center;
 `
 
 export const TaskForm = styled.form`
@@ -10,6 +10,7 @@ export const TaskForm = styled.form`
     flex-direction: column;
     width: 300px;
     padding: 10px 18px;
+    margin: 15px auto;
 `
 
 export const FormInput = styled.input`
@@ -38,4 +39,8 @@ export const SubmitButton = styled.input`
         background: black;
         color: white;
     }
+`
+
+export const Title = styled.h1`
+    font-size: 1.5rem
 `

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const HeaderContainer = styled.div`
     display: flex;
@@ -42,6 +43,8 @@ export const AddTodo = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    color: black;
+    text-decoration:none;
     @media screen and (max-width: 768px){
         width: 40%
     }
@@ -51,4 +54,16 @@ export const AddTodo = styled.div`
         margin-left: 8px;
         top: 50%
     }
+`
+
+export const ToHomepage = styled(Link)`
+    color: black;
+    margin-right: auto;
+    font-size: 2rem;
+    text-decoration: none;
+    &:hover{
+        color: black;
+        text-decoration: none
+    }
+
 `

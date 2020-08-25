@@ -19,7 +19,6 @@ const TaskReducer = (state = [], action) => {
                 ...state,
                 ...tasks
             ]
-            
         default:
             return state
     }

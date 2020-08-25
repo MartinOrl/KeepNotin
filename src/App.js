@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom'
 
 import SignIn from './components/sign-in/signIn';
+import AddTodoPage from './pages/AddTodo'
 
 import { auth, createUserProfile } from './firebase/firebase';
 
@@ -42,12 +43,20 @@ class App extends React.Component {
       <div>
         <Switch>
             <Route 
+            exact
             path="/" 
             render={() => 
               this.props.user ? (<Main />) : (<SignIn/>)
             
             }
               />
+            <Route
+            exact
+            path="/add"
+            render={() => 
+              this.props.user ? (<AddTodoPage />) : (<SignIn />)
+            }
+            />
         </Switch>
       </div>
     )

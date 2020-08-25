@@ -6,16 +6,25 @@ import { connect } from 'react-redux';
 import { TasksHolder } from './containerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
-
+import { selectAddTodoDisplay } from '../../redux/display/displaySelectors'
 import TasksContainer from '../TodoContainer/todoContainer'
 import { selectTasks } from '../../redux/tasks/taskSelectors';
 import Spinner from '../spinner/spinner';
 
+
 import {firestore} from '../../firebase/firebase'
 import { Seed } from '../../redux/tasks/taskActions'
 
+import AddTodo from '../addTodo/addTodo'
+
 
 class Container extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            display: false
+        }
+    }
 
 
     componentDidMount(){
@@ -45,19 +54,26 @@ class Container extends React.Component{
         const pending = this.getPending()
         const inProgress = this.getInProgress()
         const completed = this.getCompleted()
+        const {visibility} = this.props
+        console.log(visibility)
         return(
             <div>
                 {
-                    this.props.tasks 
-                    ?
-                    <TasksHolder>
-                        <TasksContainer tasks={pending} />
-                        <TasksContainer tasks={inProgress} />
-                        <TasksContainer tasks={completed} />
-                    </TasksHolder>
-                    :
-                    <Spinner />
+                    !visibility ? <AddTodo /> : null
                 }
+                <div>
+                    {
+                        this.props.tasks 
+                        ?
+                        <TasksHolder>
+                            <TasksContainer tasks={pending} />
+                            <TasksContainer tasks={inProgress} />
+                            <TasksContainer tasks={completed} />
+                        </TasksHolder>
+                        :
+                        <Spinner />
+                    }
+                </div>
             </div>
         )
     }
@@ -65,7 +81,8 @@ class Container extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
     user: selectCurrentUser,
-    tasks: selectTasks
+    tasks: selectTasks,
+    visibility: selectAddTodoDisplay
 })
 
 const mapDispatchToProps = dispatch => ({

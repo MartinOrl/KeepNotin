@@ -3,7 +3,7 @@ import uid from 'uid';
 
 import { connect } from 'react-redux';
 
-import { TaskAddContainer, TaskForm, FormInput, SubmitButton } from './addTodoStyles'
+import { TaskAddContainer, TaskForm, FormInput, SubmitButton, Title } from './addTodoStyles'
 
 import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/userSelectors';
@@ -18,7 +18,8 @@ class AddTodo extends React.Component{
         this.state = {
             title: '',
             priority: '1',
-            text: ''
+            text: '',
+            loading: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,11 +59,12 @@ class AddTodo extends React.Component{
     render(){
         return(
             <TaskAddContainer>
+                <Title>Add Todo</Title>
                 <TaskForm onSubmit={this.handleSubmit}>
                     <FormInput required type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
                     <FormInput required  min="1" max="3"   type="number" name="priority" value={this.state.priority} onChange={this.handleChange}  placeholder="Priority"  />
                     <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
-                    <SubmitButton type="submit" />
+                    <SubmitButton type="submit" value="Add Todo" />
                 </TaskForm>
             </TaskAddContainer>
         )
