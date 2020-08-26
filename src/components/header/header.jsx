@@ -1,35 +1,32 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { connect } from 'react-redux'
 
+import search from './search.svg'
 
-import { HeaderContainer, TrashedItems, AddTodo, ToHomepage } from './headerStyles';
-import trash from './delete.svg'
-import add from './plus.svg'
+
+import { HeaderContainer, UserTools, Title, SearchBar, SearchInput, SearchIcon } from './headerStyles'
+
 
 import { setVisibility } from '../../redux/display/displayActions';
 
-class Header extends React.PureComponent{
-
-    render(){
-        const { setDisplay } = this.props
-        return(
+const Header = () => {
+    return (
         <HeaderContainer>
-            <TrashedItems>
-                <img src={trash} alt="trash bin" />
-                <h2>Trash Bin</h2>
-            </TrashedItems>
-            <ToHomepage to="/">Home</ToHomepage>
-            <AddTodo onClick={setDisplay}>
-                <h2>Add Todo</h2>
-                <img src={add} alt="addition symbol" />
-            </AddTodo>
+            <Title>To-Do</Title>
+            <SearchBar>
+                <SearchIcon src={search} />
+                <SearchInput placeholder="Search"  />
+            </SearchBar>
+            <UserTools>
+                Test
+            </UserTools>
         </HeaderContainer>
-    )}
-};
+    )
+}
 
 
 const mapDispatchToProps = dispatch => ({
     setDisplay: () => dispatch(setVisibility())
 })
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(memo(Header));

@@ -11,6 +11,8 @@ import { selectCurrentUser } from '../../redux/user/userSelectors';
 import { AddTask } from '../../redux/tasks/taskActions';
 import { addTaskToDatabase } from '../../redux/tasks/taskUtils'
 
+import { setVisibility } from '../../redux/display/displayActions'
+
 
 class AddTodo extends React.Component{
     constructor(props){
@@ -52,6 +54,7 @@ class AddTodo extends React.Component{
             priority: '1',
             text: ''
         })
+        this.props.setDisplay()
 
     }
 
@@ -76,7 +79,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    addTodo: task => dispatch(AddTask(task))
+    addTodo: task => dispatch(AddTask(task)),
+    setDisplay: () => dispatch(setVisibility())
 })
 
 

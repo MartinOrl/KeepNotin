@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Header from '../components/header/header'
-import Container from '../components/container/container'
+import GlobalContainer from '../components/container/globalContainer'
 
 const Main = () => (
         <div>
             <Header />
-            <Container />
+            <GlobalContainer />
         </div>
 )
 

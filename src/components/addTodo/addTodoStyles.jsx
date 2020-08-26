@@ -5,13 +5,15 @@ export const TaskAddContainer = styled.div`
 `
 
 export const TaskForm = styled.form`
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     width: 300px;
     padding: 10px 18px;
     margin: 15px auto;
+    background: #e6e6ea;
+    box-shadow: 4px 7px 8px -4px rgba(0,0,0,.61)
 `
+
 
 export const FormInput = styled.input`
     width: 200px;
@@ -21,11 +23,12 @@ export const FormInput = styled.input`
     border-bottom: 1px solid #777;
     transition: 100ms ease-out;
     padding: 8px 16px;
-    &:focus{
-        background: rgb(245, 245, 245); 
-    };
+    background: #e6e6ea;
     &:-moz-ui-invalid{
         box-shadow: none
+    }
+    &::placeholder{
+        color: #111;
     }
 `
 

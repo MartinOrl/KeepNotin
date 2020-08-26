@@ -1,17 +1,21 @@
 export const TaskActionTypes = {
     ADD_TASK: 'ADD_TASK',
     REMOVE_TASK: 'REMOVE_TASK',
-    COMPLETE_TASK: 'COMPLETE_TASK',
-    SEED: 'SEED',
-    SET_VISIBILITY: 'SET_VISIBILITY'
+    STATUS_CHANGE: 'STATUS_CHANGE',
+    SET_FILTER: 'SET_FILTER'
 }
 
-export const AddTask = todo => ({
+export const AddTask = task => ({
     type: TaskActionTypes.ADD_TASK,
-    payload: todo
+    payload: task
 })
 
-export const Seed = todos => ({
-    type: TaskActionTypes.SEED,
-    payload: todos
+export const SetTaskCompleted = task => ({
+    type: TaskActionTypes.STATUS_CHANGE,
+    payload: task
+})
+
+export const SetTasksFilter = filter => ({
+    type: TaskActionTypes.SET_FILTER,
+    payload: filter
 })

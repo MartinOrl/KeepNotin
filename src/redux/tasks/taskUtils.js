@@ -6,3 +6,14 @@ export const addTaskToDatabase = (user, task) => {
         tasks: firebase.firestore.FieldValue.arrayUnion(task)
     })
 }
+
+export const TaskSetStatusComplete = (tasks, taskToUpdate) => {
+    const {id, status} = taskToUpdate;
+    const taskIndex = tasks.findIndex(task => task.id === id)
+    if(status === 'Completed'){
+        tasks[taskIndex].status = 'Pending'
+    }
+    else{
+        tasks[taskIndex].status = 'Completed'
+    }
+}

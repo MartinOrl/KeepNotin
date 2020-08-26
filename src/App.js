@@ -5,31 +5,45 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom'
 
 import SignIn from './components/sign-in/signIn';
-import AddTodoPage from './pages/AddTodo'
 
 import { auth, createUserProfile } from './firebase/firebase';
 
 import Main from './pages/Main';
+
 import { selectCurrentUser } from './redux/user/userSelectors';
+
 import { setCurrentUser} from './redux/user/userActions';
+import { AddCategory } from './redux/category/categoryActions';
+
+import { TestCategories, TestTasks, NewTestTasks } from './testSuite'
+import { AddTask } from './redux/tasks/taskActions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    const { setUser } = this.props
+    const { setUser, addCategories, addTask } = this.props
+    addCategories(TestCategories)
+    addTask(TestTasks)
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth){
-        const userRef = await createUserProfile(userAuth);
-        userRef.onSnapshot(snapShot => {
-          setUser({
-            id: snapShot.id,
-            ...snapShot.data()
+    if(process.env.NODE_ENV !== 'development'){
+      console.log("Google Login Start")
+      this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+        if(userAuth){
+          const userRef = await createUserProfile(userAuth);
+          userRef.onSnapshot(snapShot => {
+            setUser({
+              id: snapShot.id,
+              ...snapShot.data()
+            })
           })
-        })
-      }
-    })
+        }
+      })}
+    else{
+      setUser({
+        id:"Lol"
+      })
+    }
   }
   
 
@@ -42,21 +56,9 @@ class App extends React.Component {
     return(
       <div>
         <Switch>
-            <Route 
-            exact
-            path="/" 
-            render={() => 
+          <Route path="/" render={() =>
               this.props.user ? (<Main />) : (<SignIn/>)
-            
-            }
-              />
-            <Route
-            exact
-            path="/add"
-            render={() => 
-              this.props.user ? (<AddTodoPage />) : (<SignIn />)
-            }
-            />
+          } />
         </Switch>
       </div>
     )
@@ -68,7 +70,9 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setCurrentUser(user))
+  setUser: user => dispatch(setCurrentUser(user)),
+  addCategories: categories => dispatch(AddCategory(categories)),
+  addTask: task => dispatch(AddTask(task))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

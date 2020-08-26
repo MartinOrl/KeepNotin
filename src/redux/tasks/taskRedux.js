@@ -1,8 +1,17 @@
 import { TaskActionTypes } from './taskActions'
 
+
 const TaskReducer = (state = [], action) => {
     switch(action.type){
         case TaskActionTypes.ADD_TASK:
+
+            if(Array.isArray(action.payload)){
+                return [
+                    ...state,
+                    ...action.payload
+                ]
+            }
+
             return [
                 ...state,
                 {
@@ -10,15 +19,26 @@ const TaskReducer = (state = [], action) => {
                     title: action.payload.title,
                     priority: action.payload.priority,
                     text: action.payload.text,
-                    status: action.payload.status
+                    completed: false
                 }
             ]
-        case TaskActionTypes.SEED:
-            const tasks = action.payload
-            return [
-                ...state,
-                ...tasks
-            ]
+            
+        case TaskActionTypes.STATUS_CHANGE:
+            const {id} = action.payload;
+            console.log()
+            return state.map(todo =>
+                todo.id === id ? {...todo, completed: !todo.completed} : todo
+            )
+
+        default:
+            return state
+    }
+}
+
+export const TaskFilterReducer = (state= {}, action) => {
+    switch(action.type){
+        case TaskActionTypes.SET_FILTER:
+            return {...state, filter: action.payload}
         default:
             return state
     }
