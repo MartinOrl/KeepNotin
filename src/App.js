@@ -24,9 +24,9 @@ class App extends React.Component {
     const { setUser, addCategories, addTask } = this.props
     addCategories(TestCategories)
     addTask(TestTasks)
-
+    setUser({id: 'lol'})
+    
     if(process.env.NODE_ENV !== 'development'){
-      console.log("Google Login Start")
       this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
         if(userAuth){
           const userRef = await createUserProfile(userAuth);
@@ -37,19 +37,14 @@ class App extends React.Component {
             })
           })
         }
-      })}
-    else{
-      setTimeout(() => {
-        setUser({id: 'lol'})
-      }, 200);
-    }
-  }
+        
+      })
+      }
+}
   
 
   componentWillUnmount(){
-    if(process.env.NODE_ENV !== 'development'){
     this.unsubscribeFromAuth();
-  }
   }
 
   render(){

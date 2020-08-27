@@ -1,25 +1,43 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 
 import search from './search.svg'
 
 
 import { HeaderContainer, UserTools, Title, SearchBar, SearchInput, SearchIcon } from './headerStyles'
+import { SetTasksFilter, setSeachTerm } from '../../redux/tasks/taskActions';
+import { connect } from 'react-redux';
 
 
-const Header = () => {
+const Header = ({setFilter}) => {
+
+    const handleChange = event => {
+        var filter = ''
+        if(event.target.value){
+            filter = 'text'
+        }else{
+            filter = ''
+        }
+        setFilter(event.target.value)
+
+    }
+
     return (
         <HeaderContainer>
             <Title>To-Do</Title>
             <SearchBar>
                 <SearchIcon src={search} />
-                <SearchInput placeholder="Search"  />
+                <SearchInput placeholder="Search" onChange={handleChange}  />
             </SearchBar>
             <UserTools>
-                Test
+                <div>John Doe</div>
             </UserTools>
         </HeaderContainer>
     )
 }
 
+const mapDispatchToProps = dispatch => ({
+    setFilter: filter => dispatch(setSeachTerm(filter))
+})
 
-export default memo(Header);
+
+export default connect(null, mapDispatchToProps)(memo(Header));

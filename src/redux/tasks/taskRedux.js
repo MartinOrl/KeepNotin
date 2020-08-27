@@ -4,7 +4,8 @@ const INITIAL = {
     tasks: [],
     filter: '',
     categories: [],
-    currentCategory: 'My Day'
+    currentCategory: 'My Day',
+    searchTerm: ''
 }
 
 
@@ -14,7 +15,7 @@ const TaskReducer = (state = INITIAL, action) => {
             if(Array.isArray(action.payload)){
                 return {
                     ...state,
-                    tasks: [...state.tasks, ...action.payload]
+                    tasks: [...state.tasks, ...action.payload],
                 }
             }
             return {
@@ -33,6 +34,12 @@ const TaskReducer = (state = INITIAL, action) => {
                 ...state,
                 tasks: state.tasks.map(todo => todo.id === action.payload.id ? {...todo, completed: !todo.completed} : todo)
             }
+        case TaskActionTypes.SET_SEARCH:
+            return {
+                ...state,
+                searchTerm: action.payload
+            }
+
         case TaskActionTypes.SET_FILTER:
             return {
                 ...state,

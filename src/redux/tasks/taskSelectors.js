@@ -22,3 +22,8 @@ export const selectCategory = createSelector(
     [stateTasks],
     tasks => tasks.currentCategory
 )
+
+export const selectSearch = createSelector(
+    [stateTasks],
+    tasks => tasks.searchTerm
+)

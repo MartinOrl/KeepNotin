@@ -11,7 +11,6 @@ const GlobalHolderStyle = css`
 const BasicStyle = css`
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     box-sizing: border-box;
 `
 

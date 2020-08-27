@@ -4,30 +4,36 @@ export const TaskActionTypes = {
     STATUS_CHANGE: 'STATUS_CHANGE',
     SET_FILTER: 'SET_FILTER',
     SET_CURRENT_CATEGORY: 'SET_CURRENT_CATEGORY',
-    ADD_CATEGORY: 'ADD_CATEGORY'
-}
+    ADD_CATEGORY: 'ADD_CATEGORY',
+    SET_SEARCH: 'SET_SEARCH'
+};
 
 export const AddTask = task => ({
     type: TaskActionTypes.ADD_TASK,
     payload: task
-})
+});
 
 export const SetTaskCompleted = task => ({
     type: TaskActionTypes.STATUS_CHANGE,
     payload: task
-})
+});
 
 export const SetTasksFilter = filter => ({
     type: TaskActionTypes.SET_FILTER,
     payload: filter
-})
+});
 
 export const SetCurrentCategory = category => ({
     type: TaskActionTypes.SET_CURRENT_CATEGORY,
     payload: category
-})
+});
 
 export const AddCategory = category => ({
     type: TaskActionTypes.ADD_CATEGORY,
     payload: category
-})
+});
+
+export const setSeachTerm = term => ({
+    type: TaskActionTypes.SET_SEARCH,
+    payload: term
+});

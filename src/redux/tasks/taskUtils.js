@@ -47,3 +47,16 @@ export const SortTasks = (tasks, filter) => {
 export const getTasksByCategory = (tasks, category) => {
     return tasks.filter(task => task.category === category)
 }
+
+export const getTasksBySearch = (tasks, search) => {
+
+    var newArr = []
+    tasks.map(task => {
+        let val = task.title.toLowerCase().search(search.toLowerCase())
+        if(val >= 0){
+            newArr.push(task)
+        }
+    })
+    
+    return newArr
+}

@@ -100,9 +100,9 @@ export const TaskAddToggle = styled.div`
     background-color: #2196F3;
     font-size: 30px;
     color: white;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    position: fixed;
+    right: 300px;
+    bottom: 60px;
     &:hover{
         cursor: pointer;
     }
