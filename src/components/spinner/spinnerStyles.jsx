@@ -22,11 +22,10 @@ const dotSpinBefore = keyframes`
 
 
 export const RingContainer = styled.div`
-    width: 40px;
-    height: 40px;
-    position: relative;
+    height: ${size => size.size};
+    width: ${size => size.size};
     animation: ${chaseSpin} 2.5s infinite linear both;
-    lefT: 50%;
+    margin: 0 auto;
 `
 
 export const RingDot = styled.div`

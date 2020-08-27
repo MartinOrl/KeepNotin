@@ -28,6 +28,7 @@ const TasksHolderStyle = css`
     margin-right: 16px;
     padding: 12px 40px;
     background: white;
+    position: relative;
 `
 
 const InfoHolderStyle = css`

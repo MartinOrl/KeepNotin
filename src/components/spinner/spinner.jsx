@@ -2,8 +2,8 @@ import React from 'react'
 
 import { RingContainer, RingDot } from './spinnerStyles'
 
-const Spinner = () => (
-    <RingContainer>
+const Spinner = ({size}) => (
+    <RingContainer size={size}>
         <RingDot />
         <RingDot />
         <RingDot />

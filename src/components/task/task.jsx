@@ -17,7 +17,7 @@ const Task = ({task, updateStatus}) => {
                 <Title>{task.title}</Title>
                 <Text>{task.text}</Text>
             </TaskInformation>
-            <SetImportant>Set</SetImportant>    
+            <SetImportant>{task.priority}</SetImportant>    
         </TaskContainer>
         <Separator />
     </div>

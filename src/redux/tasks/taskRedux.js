@@ -35,7 +35,11 @@ const TaskReducer = (state = [], action) => {
     }
 }
 
-export const TaskFilterReducer = (state= {}, action) => {
+const INITIAL_FILTER = {
+    categories: ['My Day', 'Tasks']
+}
+
+export const TaskFilterReducer = (state= INITIAL_FILTER, action) => {
     switch(action.type){
         case TaskActionTypes.SET_FILTER:
             return {...state, filter: action.payload}

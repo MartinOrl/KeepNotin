@@ -2,21 +2,27 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
-import { selectTasks } from '../../redux/tasks/taskSelectors'
+import { selectTasks, selectTasksFilter } from '../../redux/tasks/taskSelectors'
 
 import Task from '../task/task'
 
-const TasksContainer = ({tasks}) => {
+import { SortTasks } from '../../redux/tasks/taskUtils';
+
+const TasksContainer = ({tasks, tasksFilter}) => {
+
+    const sortedTasks = SortTasks(tasks, tasksFilter)
+
     return(
     <div>
         {
-            tasks ? tasks.map(task => <Task task={task} key={task.id} />) : null
+            sortedTasks ? sortedTasks.map(task => <Task task={task} key={task.id} />) : null
         }
     </div>
 )}
 
 const mapStateToProps = createStructuredSelector({
-    tasks: selectTasks
+    tasks: selectTasks,
+    tasksFilter: selectTasksFilter
 })
 
 export default connect(mapStateToProps)(TasksContainer);

@@ -31,7 +31,6 @@ const TaskHeader = ({setFilter, filter}) => {
                 </ul>
             </SortFilters>
         </SortFiltersContainer>
-     
     </TaskHeaderContainer>
 )}
 
@@ -44,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(null, mapDispatchToProps)(TaskHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskHeader);

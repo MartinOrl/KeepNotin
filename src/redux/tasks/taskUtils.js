@@ -17,3 +17,29 @@ export const TaskSetStatusComplete = (tasks, taskToUpdate) => {
         tasks[taskIndex].status = 'Completed'
     }
 }
+
+export const SortTasks = (tasks, filter) => {
+    function alphabet(a,b){
+        if(a['title'] > b['title']) return 1;
+        if(b['title'] > a['title']) return -1;
+        return 0
+    }
+    function alphabetReverse(a,b){
+        if(a['title'] > b['title']) return -1;
+        if(b['title'] > a['title']) return 1;
+        return 0
+    }
+    function priority(){
+        return [...(tasks.filter(task => task.priority === 'High')), ...(tasks.filter(task => task.priority === 'Medium')), ...(tasks.filter(task => task.priority === 'Low'))]
+    }
+    switch(filter){
+        case 'Alphabet':
+            return tasks.sort(alphabet)
+        case 'Alphabet Reverse':
+            return tasks.sort(alphabetReverse)
+        case 'Priority':
+            return priority()
+        default: 
+            return tasks
+    }   
+}

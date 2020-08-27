@@ -3,7 +3,7 @@ import uid from 'uid';
 
 import { connect } from 'react-redux';
 
-import { TaskAddContainer, TaskForm, FormInput, SubmitButton, Title } from './addTodoStyles'
+import { ComponentContainer, TaskAddToggle, TaskAddContainer, TaskForm, FormInput, SubmitButton, Title, Selection  } from './addTodoStyles'
 
 import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/userSelectors';
@@ -13,15 +13,18 @@ import { addTaskToDatabase } from '../../redux/tasks/taskUtils'
 
 import { setVisibility } from '../../redux/display/displayActions'
 
+import Spinner from '../spinner/spinner'
+
 
 class AddTodo extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             title: '',
-            priority: '1',
+            priority: '',
             text: '',
-            loading: false
+            loading: false,
+            visibility: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,31 +48,43 @@ class AddTodo extends React.Component{
             text: this.state.text,
             status: 'Pending'
         }
-
-        addTodo(newTask);
-        addTaskToDatabase(user, newTask)
-
-        this.setState({
-            title: '',
-            priority: '1',
-            text: ''
-        })
-        this.props.setDisplay()
+        this.setState({loading: true})
+        console.log(newTask)
+        setTimeout(() => {
+            this.setState({
+                loading: !this.state.loading,
+                title: '',
+                priority: '',
+                text: ''
+            })
+        }, 3000);
 
     }
 
 
     render(){
         return(
-            <TaskAddContainer>
-                <Title>Add Todo</Title>
-                <TaskForm onSubmit={this.handleSubmit}>
-                    <FormInput required type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
-                    <FormInput required  min="1" max="3"   type="number" name="priority" value={this.state.priority} onChange={this.handleChange}  placeholder="Priority"  />
-                    <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
-                    <SubmitButton type="submit" value="Add Todo" />
-                </TaskForm>
-            </TaskAddContainer>
+            <ComponentContainer>
+                <TaskAddContainer visibility={this.state.visibility ? true : false} >
+                    <Title>Add Todo</Title>
+                    <TaskForm onSubmit={this.handleSubmit}>
+                        <FormInput required type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
+                        <Selection onChange={this.handleChange} name='priority' value={this.state.priority}>
+                            <option value='' selected disable hidden>Priority</option>
+                            <option value='Low' >Low</option>
+                            <option value='Medium' >Medium</option>
+                            <option value='High' >High</option>
+                        </Selection>
+                        <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
+                        <SubmitButton  loading={this.state.loading ? true : false} type="submit" value="Add Todo">
+                        {
+                            this.state.loading ? <Spinner size='20px' /> : 'Add Todo'
+                        }
+                        </SubmitButton>
+                    </TaskForm>
+                </TaskAddContainer>
+                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})}><p>+</p></TaskAddToggle>
+            </ComponentContainer>
         )
     }
 }

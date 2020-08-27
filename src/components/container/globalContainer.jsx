@@ -15,6 +15,7 @@ import { selectCategories } from '../../redux/category/categorySelectors'
 import TaskHeader from '../TaskHeader/taskHeader'
 
 import TaskContainer from '../tasksContainer/tasksContainer'
+import AddTodo from '../addTodo/addTodo';
 
 
 class GlobalContainer extends React.Component{
@@ -52,6 +53,7 @@ class GlobalContainer extends React.Component{
                 <Holder type='Tasks'>
                     <TaskHeader />
                     <TaskContainer />
+                    <AddTodo />
                 </Holder>
                 <Holder type='Info'>
                     Info Container Text
