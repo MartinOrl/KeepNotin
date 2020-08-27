@@ -15,7 +15,7 @@ import { selectCurrentUser } from './redux/user/userSelectors';
 import { setCurrentUser} from './redux/user/userActions';
 import { AddCategory } from './redux/category/categoryActions';
 
-import { TestCategories, TestTasks, NewTestTasks } from './testSuite'
+import { TestCategories, TestTasks } from './testSuite'
 import { AddTask } from './redux/tasks/taskActions';
 
 class App extends React.Component {

@@ -7,15 +7,17 @@ import { Holder, CategoryContainer } from './globalContainerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 import { selectAddTodoDisplay } from '../../redux/display/displaySelectors'
-import { selectCategories } from '../../redux/category/categorySelectors'
+import { selectCategories, selectCategory } from '../../redux/category/categorySelectors'
 
 // import {firestore} from '../../firebase/firebase'
 
-// import AddTodo from '../addTodo/addTodo'
 import TaskHeader from '../TaskHeader/taskHeader'
 
 import TaskContainer from '../tasksContainer/tasksContainer'
 import AddTodo from '../addTodo/addTodo';
+import { selectTasks } from '../../redux/tasks/taskSelectors';
+import { getTasksByCategory } from '../../redux/tasks/taskUtils';
+import { SetCurrentCategory } from '../../redux/category/categoryActions';
 
 
 class GlobalContainer extends React.Component{
@@ -37,22 +39,29 @@ class GlobalContainer extends React.Component{
     //     })}
 
     // }
+    handleClick = event => {
+        this.props.setCategory(event.target.textContent)
+    }
+
+
 
     render(){
-        const { categories } = this.props
+        const { categories, currentCategory, tasks } = this.props
+        const tasksByCategory = getTasksByCategory(tasks, currentCategory)
+
         return(
             <Holder type='Global'>
                 <Holder type='Category'>
                     {
                         categories 
                         ? 
-                        categories.map(category => (<CategoryContainer key={uid(2)} >{category}</CategoryContainer>))
+                        categories.map(category => (<CategoryContainer key={uid(2)} name={category} onClick={this.handleClick} >{category}</CategoryContainer>))
                         : null
                     }
                 </Holder>
                 <Holder type='Tasks'>
                     <TaskHeader />
-                    <TaskContainer />
+                    <TaskContainer tasks={tasksByCategory} />
                     <AddTodo />
                 </Holder>
                 <Holder type='Info'>
@@ -66,7 +75,13 @@ class GlobalContainer extends React.Component{
 const mapStateToProps = createStructuredSelector({
     user: selectCurrentUser,
     visibility: selectAddTodoDisplay,
-    categories: selectCategories
+    tasks: selectTasks,
+    categories: selectCategories,
+    currentCategory: selectCategory
 })
 
-export default connect(mapStateToProps)(GlobalContainer);
+const mapDispatchToProps = dispatch => ({
+    setCategory: category => dispatch(SetCurrentCategory(category))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalContainer);

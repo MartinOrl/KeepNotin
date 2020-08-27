@@ -9,11 +9,13 @@ import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 
 import { AddTask } from '../../redux/tasks/taskActions';
+
+// eslint-disable-next-line
 import { addTaskToDatabase } from '../../redux/tasks/taskUtils'
 
 import { setVisibility } from '../../redux/display/displayActions'
 
-import Spinner from '../spinner/spinner'
+import { selectCategory } from '../../redux/category/categorySelectors';
 
 
 class AddTodo extends React.Component{
@@ -23,7 +25,6 @@ class AddTodo extends React.Component{
             title: '',
             priority: '',
             text: '',
-            loading: false,
             visibility: false
         }
         this.handleChange = this.handleChange.bind(this);
@@ -39,25 +40,24 @@ class AddTodo extends React.Component{
 
     handleSubmit = async event => {
         event.preventDefault()
-        const { addTodo, user } = this.props;
+        const { addTodo, category } = this.props;
 
         const newTask = {
             id: uid(9),
             title: this.state.title,
             priority: this.state.priority,
             text: this.state.text,
-            status: 'Pending'
+            category: category,
+            completed: false
         }
-        this.setState({loading: true})
-        console.log(newTask)
-        setTimeout(() => {
-            this.setState({
-                loading: !this.state.loading,
-                title: '',
-                priority: '',
-                text: ''
-            })
-        }, 3000);
+
+        addTodo(newTask)
+
+        this.setState({
+            title: '',
+            priority: '',
+            text: ''
+        })
 
     }
 
@@ -76,10 +76,8 @@ class AddTodo extends React.Component{
                             <option value='High' >High</option>
                         </Selection>
                         <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
-                        <SubmitButton  loading={this.state.loading ? true : false} type="submit" value="Add Todo">
-                        {
-                            this.state.loading ? <Spinner size='20px' /> : 'Add Todo'
-                        }
+                        <SubmitButton type="submit" value="Add Todo">
+                        Add Todo
                         </SubmitButton>
                     </TaskForm>
                 </TaskAddContainer>
@@ -90,7 +88,8 @@ class AddTodo extends React.Component{
 }
 
 const mapStateToProps = createStructuredSelector({
-    user: selectCurrentUser
+    user: selectCurrentUser,
+    category: selectCategory
 });
 
 const mapDispatchToProps = dispatch => ({

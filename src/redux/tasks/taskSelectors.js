@@ -13,8 +13,3 @@ export const selectTasksFilter = createSelector(
     [stateTasksFilter],
     filter => filter.filter
 )
-
-export const selectTasksCategory = createSelector(
-    [stateTasksFilter],
-    filter => filter.categories
-)

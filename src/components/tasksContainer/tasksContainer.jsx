@@ -2,13 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
-import { selectTasks, selectTasksFilter } from '../../redux/tasks/taskSelectors'
+import { selectTasksFilter } from '../../redux/tasks/taskSelectors'
 
 import Task from '../task/task'
 
 import { SortTasks } from '../../redux/tasks/taskUtils';
 
 const TasksContainer = ({tasks, tasksFilter}) => {
+
 
     const sortedTasks = SortTasks(tasks, tasksFilter)
 
@@ -21,7 +22,6 @@ const TasksContainer = ({tasks, tasksFilter}) => {
 )}
 
 const mapStateToProps = createStructuredSelector({
-    tasks: selectTasks,
     tasksFilter: selectTasksFilter
 })
 

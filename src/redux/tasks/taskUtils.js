@@ -43,3 +43,7 @@ export const SortTasks = (tasks, filter) => {
             return tasks
     }   
 }
+
+export const getTasksByCategory = (tasks, category) => {
+    return tasks.filter(task => task.category === category)
+}

@@ -19,13 +19,13 @@ const TaskReducer = (state = [], action) => {
                     title: action.payload.title,
                     priority: action.payload.priority,
                     text: action.payload.text,
-                    completed: false
+                    completed: false,
+                    category: action.payload.category
                 }
             ]
             
         case TaskActionTypes.STATUS_CHANGE:
             const {id} = action.payload;
-            console.log()
             return state.map(todo =>
                 todo.id === id ? {...todo, completed: !todo.completed} : todo
             )

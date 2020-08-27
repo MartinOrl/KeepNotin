@@ -1,4 +1,4 @@
-import styled, {css, keyframes} from 'styled-components'
+import styled, {css} from 'styled-components'
 
 const display = css`
     display: flex;
@@ -38,18 +38,6 @@ const getHoverAvaliable = ({loading}) => {
     }
 }
 
-const loadingStyle = css`
-    background: #88d8b0;
-    color: black;
-    border: none;
-`
-
-const getLoading = ({loading}) => {
-    if(loading){
-        return loadingStyle
-    }
-}
-
 export const ComponentContainer = styled.div`
     text-align: center;
     position: absolute;
@@ -60,15 +48,15 @@ export const ComponentContainer = styled.div`
 export const TaskForm = styled.form`
     display: flex;
     flex-direction: column;
-    width: 300px;
-    padding: 10px 18px;
+    width: 100%;
     margin: 9px auto;
     text-align: start;
 `
 
 
 export const FormInput = styled.input`
-    width: 200px;
+    width: 75%;
+    margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
     border: none;
@@ -85,10 +73,12 @@ export const FormInput = styled.input`
 
 export const SubmitButton = styled.button`
     border: 1px solid black;
+    margin: 0 auto;
     margin-top: 10px;
     padding: 12px 8px;
     background: none;
     transition: 90ms ease-in-out;
+    width: 80%;
     &:hover{
         ${getHoverAvaliable}
     }
@@ -128,6 +118,7 @@ export const TaskAddContainer = styled.div`
     bottom: 48px;
     background: white;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.36);
+    width: 230px;
     ${getStyle}
 `
 
@@ -137,7 +128,8 @@ export const Selection = styled.select`
     border: none;
     border-bottom: 1px solid #777;
     transition: 300ms ease-in-out;
-    width: 230px;
+    width: 200px;
+    margin: 0 auto;
     margin-bottom: 10px;
     &:active, &:focus{
         outline: none;

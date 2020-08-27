@@ -20,7 +20,7 @@ export const TestTasks = [
         title: 'Yeet an App',
         priority: 'High',
         text: 'Text for testing',
-        category: '',
+        category: 'My Day',
         completed: true
     },
     {
@@ -45,20 +45,3 @@ export const TestCategories = [
     'My Day', 'Important', 'Tasks',
     'Work'
 ]
-
-export const NewTestTasks = {
-    3456789: {
-        id: 3456789,
-        title: 'Make an App',
-        priority: 'Lo',
-        text: 'Lol',
-        status: 'Pending'
-    },
-    3899129: {
-        id: 3899129,
-        title: 'Make a Website',
-        priority: 'High',
-        text: 'Fiverr Page',
-        status: 'Pending'
-    },
-}
