@@ -6,8 +6,6 @@ import uid from 'uid'
 import { Holder, CategoryContainer } from './globalContainerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
-import { selectAddTodoDisplay } from '../../redux/display/displaySelectors'
-import { selectCategories, selectCategory } from '../../redux/category/categorySelectors'
 
 // import {firestore} from '../../firebase/firebase'
 
@@ -15,9 +13,9 @@ import TaskHeader from '../TaskHeader/taskHeader'
 
 import TaskContainer from '../tasksContainer/tasksContainer'
 import AddTodo from '../addTodo/addTodo';
-import { selectTasks } from '../../redux/tasks/taskSelectors';
+import { selectTasks, selectCategory, selectCategories } from '../../redux/tasks/taskSelectors';
 import { getTasksByCategory } from '../../redux/tasks/taskUtils';
-import { SetCurrentCategory } from '../../redux/category/categoryActions';
+import { SetCurrentCategory } from '../../redux/tasks/taskActions';
 
 
 class GlobalContainer extends React.Component{
@@ -74,7 +72,6 @@ class GlobalContainer extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
     user: selectCurrentUser,
-    visibility: selectAddTodoDisplay,
     tasks: selectTasks,
     categories: selectCategories,
     currentCategory: selectCategory

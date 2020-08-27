@@ -1,13 +1,10 @@
 import React, {memo} from 'react';
-import { connect } from 'react-redux'
 
 import search from './search.svg'
 
 
 import { HeaderContainer, UserTools, Title, SearchBar, SearchInput, SearchIcon } from './headerStyles'
 
-
-import { setVisibility } from '../../redux/display/displayActions';
 
 const Header = () => {
     return (
@@ -25,8 +22,4 @@ const Header = () => {
 }
 
 
-const mapDispatchToProps = dispatch => ({
-    setDisplay: () => dispatch(setVisibility())
-})
-
-export default connect(null, mapDispatchToProps)(memo(Header));
+export default memo(Header);

@@ -1,51 +1,70 @@
 import { TaskActionTypes } from './taskActions'
 
+const INITIAL = {
+    tasks: [],
+    filter: '',
+    categories: [],
+    currentCategory: 'My Day'
+}
 
-const TaskReducer = (state = [], action) => {
+
+const TaskReducer = (state = INITIAL, action) => {
     switch(action.type){
         case TaskActionTypes.ADD_TASK:
-
             if(Array.isArray(action.payload)){
-                return [
+                return {
                     ...state,
-                    ...action.payload
-                ]
+                    tasks: [...state.tasks, ...action.payload]
+                }
             }
-
-            return [
+            return {
                 ...state,
-                {
+                tasks: [...state.tasks, {
                     id: action.payload.id,
                     title: action.payload.title,
                     priority: action.payload.priority,
                     text: action.payload.text,
-                    completed: false,
-                    category: action.payload.category
-                }
-            ]
-            
+                    category: action.payload.category,
+                    completed: false
+                }]
+            }
         case TaskActionTypes.STATUS_CHANGE:
-            const {id} = action.payload;
-            return state.map(todo =>
-                todo.id === id ? {...todo, completed: !todo.completed} : todo
-            )
-
-        default:
-            return state
-    }
-}
-
-const INITIAL_FILTER = {
-    categories: ['My Day', 'Tasks']
-}
-
-export const TaskFilterReducer = (state= INITIAL_FILTER, action) => {
-    switch(action.type){
+            return {
+                ...state,
+                tasks: state.tasks.map(todo => todo.id === action.payload.id ? {...todo, completed: !todo.completed} : todo)
+            }
         case TaskActionTypes.SET_FILTER:
-            return {...state, filter: action.payload}
+            return {
+                ...state,
+                filter: action.payload
+            }
+        case TaskActionTypes.SET_CURRENT_CATEGORY:
+            return {
+                ...state,
+                currentCategory: action.payload
+            }
+        case TaskActionTypes.ADD_CATEGORY:
+            if(Array.isArray(action.payload)){
+                return {
+                    ...state,
+                    categories: [
+                        ...state.categories,
+                        ...action.payload
+                    ]
+                }
+            }
+            return {
+                ...state,
+                categories: [
+                    ...state.categories,
+                    action.payload
+                ]
+            }
+
         default:
             return state
     }
 }
+
 
 export default TaskReducer;

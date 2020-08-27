@@ -2,14 +2,23 @@ import { createSelector } from 'reselect';
 
 const stateTasks = state => state.tasks;
 
-const stateTasksFilter = state => state.tasksFilter;
 
 export const selectTasks = createSelector(
     [stateTasks],
-    tasks => tasks
+    tasks => tasks.tasks
 );
 
 export const selectTasksFilter = createSelector(
-    [stateTasksFilter],
-    filter => filter.filter
+    [stateTasks],
+    tasks => tasks.filter
+)
+
+export const selectCategories = createSelector(
+    [stateTasks],
+    tasks => tasks.categories
+)
+
+export const selectCategory = createSelector(
+    [stateTasks],
+    tasks => tasks.currentCategory
 )

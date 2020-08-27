@@ -11,12 +11,11 @@ import { auth, createUserProfile } from './firebase/firebase';
 import Main from './pages/Main';
 
 import { selectCurrentUser } from './redux/user/userSelectors';
-
 import { setCurrentUser} from './redux/user/userActions';
-import { AddCategory } from './redux/category/categoryActions';
+
+import { AddTask, AddCategory } from './redux/tasks/taskActions';
 
 import { TestCategories, TestTasks } from './testSuite'
-import { AddTask } from './redux/tasks/taskActions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -40,15 +39,17 @@ class App extends React.Component {
         }
       })}
     else{
-      setUser({
-        id:"Lol"
-      })
+      setTimeout(() => {
+        setUser({id: 'lol'})
+      }, 200);
     }
   }
   
 
   componentWillUnmount(){
+    if(process.env.NODE_ENV !== 'development'){
     this.unsubscribeFromAuth();
+  }
   }
 
   render(){

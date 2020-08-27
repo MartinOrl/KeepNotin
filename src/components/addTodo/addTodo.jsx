@@ -9,13 +9,9 @@ import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 
 import { AddTask } from '../../redux/tasks/taskActions';
-
 // eslint-disable-next-line
 import { addTaskToDatabase } from '../../redux/tasks/taskUtils'
-
-import { setVisibility } from '../../redux/display/displayActions'
-
-import { selectCategory } from '../../redux/category/categorySelectors';
+import { selectCategory } from '../../redux/tasks/taskSelectors';
 
 
 class AddTodo extends React.Component{
@@ -94,7 +90,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     addTodo: task => dispatch(AddTask(task)),
-    setDisplay: () => dispatch(setVisibility())
 })
 
 
