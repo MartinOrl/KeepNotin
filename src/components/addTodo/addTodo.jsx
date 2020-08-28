@@ -52,7 +52,8 @@ class AddTodo extends React.Component{
         this.setState({
             title: '',
             priority: '',
-            text: ''
+            text: '',
+            visibility: false
         })
 
     }
@@ -61,6 +62,7 @@ class AddTodo extends React.Component{
     render(){
         return(
             <ComponentContainer>
+                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})}><p>+</p></TaskAddToggle>
                 <TaskAddContainer visibility={this.state.visibility ? true : false} >
                     <Title>Add Todo</Title>
                     <TaskForm onSubmit={this.handleSubmit}>
@@ -77,7 +79,6 @@ class AddTodo extends React.Component{
                         </SubmitButton>
                     </TaskForm>
                 </TaskAddContainer>
-                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})}><p>+</p></TaskAddToggle>
             </ComponentContainer>
         )
     }

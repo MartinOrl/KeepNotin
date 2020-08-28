@@ -51,6 +51,7 @@ export const getTasksByCategory = (tasks, category) => {
 export const getTasksBySearch = (tasks, search) => {
 
     var newArr = []
+    // eslint-disable-next-line
     tasks.map(task => {
         let val = task.title.toLowerCase().search(search.toLowerCase())
         if(val >= 0){

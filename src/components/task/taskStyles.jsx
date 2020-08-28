@@ -16,6 +16,7 @@ export const TaskContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin: 8px 0;
+    transition: 300ms ease-in-out;
 
 `
 
@@ -37,6 +38,7 @@ export const TaskInformation = styled.div`
     display: flex;
     flex-direction: column;
     margin-right: auto;
+    margin-left: 20px;
     ${Title}, ${Text} {
         ${getStyle}
     }
@@ -49,14 +51,14 @@ export const CompleteContainer = styled.label`
     cursor: pointer;
     font-size: 22px;
     user-select: none;
-    margin: auto 12px auto 0;
+    margin: auto 30px auto 0;
 `
 export const Tick = styled.span`
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 35px;
     background-color: #eee;
     transition: 300ms ease-in-out;
     border-radius: 50%;
@@ -64,17 +66,19 @@ export const Tick = styled.span`
         content: '';
         position: absolute;
         display: none;
-        left: 9px;
-        top: 5px;
-        width: 5px;
-        height: 10px;
+        left: 12px;
+        top: 8px;
+        width: 8px;
+        height: 13px;
         border: solid white;
         border-width: 0 3px 3px 0;
         transform: rotate(45deg);
     }
 `
 
-export const SetImportant = styled.p`
+export const SetImportant = styled.img`
+    width: 20px;
+    height: auto;
     &:hover{
         cursor: pointer;
     }
@@ -97,5 +101,15 @@ export const Complete = styled.input`
     }
     &:checked ~ ${Tick}:after{
         display: block;
+    }
+`
+
+export const RemoveToggle = styled.div`
+    margin: auto 20px;
+    transition: 200ms ease-in-out;
+    font-size: 20px;
+    &:hover{
+        color: red;
+        cursor: pointer;
     }
 `

@@ -69,6 +69,9 @@ export const FormInput = styled.input`
     &::placeholder{
         color: #111;
     }
+    @media screen and (max-width: 875px){
+        margin: 15px auto;
+    }
 `
 
 export const SubmitButton = styled.button`
@@ -81,9 +84,12 @@ export const SubmitButton = styled.button`
     width: 80%;
     &:hover{
         ${getHoverAvaliable}
-    }
+    };
     &:active{
-
+    };
+    @media screen and (max-width: 875px){
+        margin: auto;
+        margin-top: 40px;;
     }
 `
 
@@ -94,14 +100,14 @@ export const Title = styled.h1`
 `
 
 export const TaskAddToggle = styled.div`
-    height: 45px;
-    width: 45px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     background-color: #2196F3;
-    font-size: 30px;
+    font-size: 38px;
     color: white;
     position: fixed;
-    right: 300px;
+    right: 200px;
     bottom: 60px;
     &:hover{
         cursor: pointer;
@@ -110,16 +116,33 @@ export const TaskAddToggle = styled.div`
         margin: 0 auto;
         user-select: none;
     }
+    @media screen and (max-width: 875px){
+        right: 40px;
+        bottom: 40px;
+        font-size: 45px;
+    }
 `
 
 export const TaskAddContainer = styled.div`
-    position: relative;
-    right: 48px;
-    bottom: 48px;
+    position: fixed;
+    right: 80px;
+    bottom: 160px;
     background: white;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.36);
     width: 230px;
-    ${getStyle}
+    ${getStyle};
+    @media screen and (max-width: 875px){
+        left: 10%;
+        bottom: 60px;
+        width: 300px;
+        height: 400px;
+    }
+    @media screen and (max-width: 678px){
+        width: 70%;
+        height: 400px;
+        left: 50px;
+        bottom: 120px;
+    }
 `
 
 
@@ -141,4 +164,8 @@ export const Selection = styled.select`
     background-repeat: no-repeat, repeat;
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
+    @media screen and (max-width: 875px){
+        width: 250px;
+        margin: 15px auto;
+    }
 `

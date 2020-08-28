@@ -18,7 +18,7 @@ const TasksContainer = ({tasks, tasksFilter}) => {
     return(
     <Container>
         {
-            sortedTasks ? sortedTasks.map(task => <Task task={task} key={task.id} />) : null
+            sortedTasks ? sortedTasks.map((task, index) => <Task task={task} key={task.id} index={index === sortedTasks.length -1 ? index : null} />) : null
         }
     </Container>
 )}

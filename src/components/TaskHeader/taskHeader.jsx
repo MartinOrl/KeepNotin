@@ -13,6 +13,7 @@ const TaskHeader = ({setFilter, filter}) => {
 
     const handleClick = event => {
         setFilter(event.target.type)
+        setVisibility(false)
     }
 
     return(

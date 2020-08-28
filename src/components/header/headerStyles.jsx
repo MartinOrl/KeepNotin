@@ -4,7 +4,7 @@ export const HeaderContainer = styled.div`
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
-    padding: 8px 16px;
+    padding: 8px 40px 8px 16px;
     background: #0392cf;
     justify-content: space-between;
 `
@@ -12,6 +12,9 @@ export const HeaderContainer = styled.div`
 export const UserTools = styled.div`
     margin: auto 0;
     color: #e7eff6;
+    @media screen and (max-widtH: 875px){
+        display: none;
+    }
 `
 
 export const Title = styled.h1`
@@ -40,6 +43,10 @@ export const SearchBar = styled.div`
             transform: rotate(45deg)
                         
         }
+    }
+    @media screen and (max-width: 875px){
+        width: 90%;
+        margin: auto;
     }
 `
 

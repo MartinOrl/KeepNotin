@@ -1,3 +1,5 @@
+
+// eslint-disable-next-line
 import React, {useEffect} from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
@@ -6,7 +8,7 @@ import uid from 'uid'
 import { Holder, CategoryContainer } from './globalContainerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
-
+// eslint-disable-next-line
 import {firestore} from '../../firebase/firebase'
 
 import TaskHeader from '../TaskHeader/taskHeader'
@@ -47,7 +49,7 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
                 {
                     categories 
                     ? 
-                    categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} >{category}</CategoryContainer>))
+                    categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
                     : null
                 }
             </Holder>

@@ -5,13 +5,19 @@ export const TaskActionTypes = {
     SET_FILTER: 'SET_FILTER',
     SET_CURRENT_CATEGORY: 'SET_CURRENT_CATEGORY',
     ADD_CATEGORY: 'ADD_CATEGORY',
-    SET_SEARCH: 'SET_SEARCH'
+    SET_SEARCH: 'SET_SEARCH',
+    UP_IMPORTANCE: 'UP_IMPORTANCE'
 };
 
 export const AddTask = task => ({
     type: TaskActionTypes.ADD_TASK,
     payload: task
 });
+
+export const RemoveTask = task => ({
+    type: TaskActionTypes.REMOVE_TASK,
+    payload: task
+})
 
 export const SetTaskCompleted = task => ({
     type: TaskActionTypes.STATUS_CHANGE,
@@ -37,3 +43,8 @@ export const setSeachTerm = term => ({
     type: TaskActionTypes.SET_SEARCH,
     payload: term
 });
+
+export const UpImportance = task => ({
+    type: TaskActionTypes.UP_IMPORTANCE,
+    payload: task.id
+})

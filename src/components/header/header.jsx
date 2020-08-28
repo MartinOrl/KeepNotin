@@ -1,17 +1,18 @@
-import React, {memo, useState} from 'react';
+import React, { memo } from 'react';
 
 import search from './search.svg'
 
 
 import { HeaderContainer, UserTools, Title, SearchBar, SearchInput, SearchIcon } from './headerStyles'
-import { SetTasksFilter, setSeachTerm } from '../../redux/tasks/taskActions';
+import { setSeachTerm } from '../../redux/tasks/taskActions';
 import { connect } from 'react-redux';
 
 
 const Header = ({setFilter}) => {
 
     const handleChange = event => {
-        var filter = ''
+        // eslint-disable-next-line
+        let filter;
         if(event.target.value){
             filter = 'text'
         }else{
