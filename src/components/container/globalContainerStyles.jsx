@@ -33,6 +33,7 @@ const GlobalHolderStyle = css`
     display: flex;
     flex-direction: row;
     background: #e5e6eb;
+    transition: 300ms ease-in-out;
     @media screen and (max-width: 875px){
         flex-direction: column;
     }

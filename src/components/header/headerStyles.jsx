@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const HeaderContainer = styled.div`
     display: flex;
@@ -12,8 +12,8 @@ export const HeaderContainer = styled.div`
 export const UserTools = styled.div`
     margin: auto 0;
     color: #e7eff6;
-    @media screen and (max-widtH: 875px){
-        display: none;
+    @media screen and (max-width: 768px){
+        margin: 5px auto;
     }
 `
 
@@ -22,6 +22,10 @@ export const Title = styled.h1`
     font-weight: 400;
     color: #e7eff6;
     margin-left: 20px;
+    @media screen and (max-width: 875px){
+        width: 100%;
+        text-align: center;
+    }
 `
 export const SearchIcon = styled.img`
     margin-right: 5px;
@@ -58,3 +62,70 @@ export const SearchInput = styled.input`
     transition: 300ms ease-in-out;
 `   
 
+export const UserOptionsToggle = styled.p`
+
+`
+const rotation = css`
+    transform: rotate(-90deg)
+`
+
+const ChevronBasic = css`
+    transform: rotate(90deg)
+`
+const chevronRotate = ({visibility}) => {
+    if(visibility){
+        return rotation;
+    } else{
+        return ChevronBasic
+    }
+}
+
+export const Chevron = styled.p`
+    transition: 200ms ease-in-out;
+    margin-left: 8px;
+    ${chevronRotate};
+`
+
+const display = css`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    border: 1px solid black;
+    background: white;
+    overflow: hidden;
+`
+
+const noDisplay = css`
+    display: none;
+`
+
+const getDisplay = ({visibility}) => {
+    if(visibility){
+        return display
+    } else{
+        return noDisplay
+    }
+}
+
+export const UserOptions = styled.div`
+    ${getDisplay}
+`
+
+export const Option = styled.p`
+    margin: 8px 0;
+    padding: 8px 16px;
+    width: 100%;
+    color: black;
+    &:hover{
+        background: #f7f7f7;
+        cursor: pointer;
+    }
+`
+
+export const ToggleContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    &:hover{
+        cursor: pointer;
+    }
+`

@@ -5,10 +5,10 @@ import { createStructuredSelector } from 'reselect'
 
 import { TaskHeaderContainer, Title, SortFilters, SortFilterToggle, Chevron, SortFiltersContainer, SortFilterToggleTitle } from './taskHeaderStyles'
 import { SetTasksFilter } from '../../redux/tasks/taskActions'
-import { selectTasksFilter } from '../../redux/tasks/taskSelectors'
+import { selectCategory } from '../../redux/tasks/taskSelectors'
 
 
-const TaskHeader = ({setFilter, filter}) => {
+const TaskHeader = ({setFilter, currentCategory}) => {
     const [visibility, setVisibility] = useState(false)
 
     const handleClick = event => {
@@ -18,7 +18,7 @@ const TaskHeader = ({setFilter, filter}) => {
 
     return(
     <TaskHeaderContainer>
-        <Title>My Day</Title>
+        <Title>{currentCategory}</Title>
         <SortFiltersContainer>
             <SortFilterToggle onClick={() => setVisibility(!visibility)} >
                 <SortFilterToggleTitle>Sort</SortFilterToggleTitle>
@@ -36,7 +36,7 @@ const TaskHeader = ({setFilter, filter}) => {
 )}
 
 const mapStateToProps = createStructuredSelector({
-    filter: selectTasksFilter
+    currentCategory: selectCategory
 })
 
 const mapDispatchToProps = dispatch => ({

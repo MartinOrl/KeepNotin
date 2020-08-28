@@ -10,6 +10,10 @@ const noDisplay = css`
     display: none;
 `
 
+const isActive = css`
+    transform: rotate(45deg);
+`
+
 const hoverEffect = css`
     background: black;
     color: white;
@@ -36,6 +40,13 @@ const getHoverAvaliable = ({loading}) => {
     } else{
         return noHover
     }
+}
+
+const getActive = ({active}) => {
+    if(active){
+        return isActive
+    }
+    return null
 }
 
 export const ComponentContainer = styled.div`
@@ -109,17 +120,16 @@ export const TaskAddToggle = styled.div`
     position: fixed;
     right: 200px;
     bottom: 60px;
+    user-select: none;
+    transition: 300ms ease-in-out;
+    ${getActive};
     &:hover{
         cursor: pointer;
     }
-    p{
-        margin: 0 auto;
-        user-select: none;
-    }
-    @media screen and (max-width: 875px){
+    @media screen and (max-width: 768px){
         right: 40px;
         bottom: 40px;
-        font-size: 45px;
+        font-size: 40px;
     }
 `
 

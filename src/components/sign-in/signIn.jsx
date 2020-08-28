@@ -1,7 +1,9 @@
 import React from 'react'
 import { auth } from '../../firebase/firebase'
 
-import { LoginContainer, LoginForm, FormInput, SubmitButton, Title, Subtitle } from './signInStyles'
+import { LoginContainer, LoginForm, FormInput, SubmitButton, Title, Subtitle, Guest, Demo } from './signInStyles'
+import { setCurrentUser } from '../../redux/user/userActions'
+import { connect } from 'react-redux'
 
 class SignIn extends React.Component {
     constructor(props){
@@ -26,14 +28,22 @@ class SignIn extends React.Component {
         event.preventDefault();
 
         const { email, password } = this.state;
-
         try{
             await auth.signInWithEmailAndPassword(email, password);
             console.log("Logging in")
             this.setState({email: '', password: ''})
+            console.log("Clear Login State")
         }catch (error){
             console.error(error)
         }
+    }
+
+    loginAsGuest = () => {
+        this.props.setUser({id: 'Guest', userName: 'Guest'})
+    }
+
+    loginDemo = () => {
+        this.props.setUser({id: 'Demo', userName: 'Demo'})
     }
 
     render(){
@@ -46,6 +56,8 @@ class SignIn extends React.Component {
                     <FormInput type="password" name="password" onChange={this.handleChange} value={this.state.password} placeholder='Password'  />
                     <SubmitButton type="submit" value="Log In" />
                 </LoginForm>
+                <Guest onClick={this.loginAsGuest} >Enter as Guest</Guest>
+                <Demo onClick={this.loginDemo} >Demo Version</Demo>
             </LoginContainer>
         )
     }
@@ -53,4 +65,8 @@ class SignIn extends React.Component {
 
 }
 
-export default SignIn
+const mapDispatchToProps = dispatch => ({
+    setUser: user => dispatch(setCurrentUser(user))
+})
+
+export default  connect(null, mapDispatchToProps)(SignIn)

@@ -6,7 +6,7 @@ export const TaskActionTypes = {
     SET_CURRENT_CATEGORY: 'SET_CURRENT_CATEGORY',
     ADD_CATEGORY: 'ADD_CATEGORY',
     SET_SEARCH: 'SET_SEARCH',
-    UP_IMPORTANCE: 'UP_IMPORTANCE'
+    UP_IMPORTANCE: 'UP_IMPORTANCE',
 };
 
 export const AddTask = task => ({

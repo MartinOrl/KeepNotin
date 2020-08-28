@@ -7,6 +7,13 @@ export const addTaskToDatabase = (user, task) => {
     })
 }
 
+export const addCategoryToDatabase = (user, category) => {
+    var categoryRef = firestore.collection("users").doc(user.id).collection("tasks").doc('tasks')
+    return categoryRef.update({
+        categories: firebase.firestore.FieldValue.arrayUnion(category)
+    })
+}
+
 export const TaskSetStatusComplete = (tasks, taskToUpdate) => {
     const {id, status} = taskToUpdate;
     const taskIndex = tasks.findIndex(task => task.id === id)

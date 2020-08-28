@@ -15,12 +15,16 @@ import TaskHeader from '../TaskHeader/taskHeader'
 
 import TaskContainer from '../tasksContainer/tasksContainer'
 import AddTodo from '../addTodo/addTodo';
+import CategoryAdd from '../addCategory/addCategory'
+
 import { selectTasks, selectCategory, selectCategories, selectSearch } from '../../redux/tasks/taskSelectors';
 import { getTasksByCategory, getTasksBySearch } from '../../redux/tasks/taskUtils';
-import { SetCurrentCategory, AddTask } from '../../redux/tasks/taskActions';
+import { SetCurrentCategory, AddTask, AddCategory } from '../../redux/tasks/taskActions';
+
+import { TestTasks } from '../../testSuite'
 
 
-const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm}) => {
+const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm, addCategory}) => {
     // useEffect(() => {
     //         var tasksRef = firestore.collection('users').doc(user.id).collection('tasks').doc('tasks')
     //         tasksRef.get().then(doc => {
@@ -29,6 +33,28 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
     //             addTask(tasksFromFirebase)
     //         })
     // }, [addTask, user])
+
+    const seedFromFirebase = () => {
+        var taskRef = firestore.collection('users').doc(user.id).collection('tasks').doc('tasks')
+        taskRef.get().then(doc => {
+            var tasksFromDatabase = doc.data().tasks;
+            var categoriesFromDatabase = doc.data().categories;
+            addTask(tasksFromDatabase)
+            addCategory(categoriesFromDatabase)
+        })
+    }
+
+    useEffect(() => {
+        if(user.id){
+            if(user.id === 'Demo'){
+                addTask(TestTasks)
+            }
+            if(user.id.length > 16){
+                seedFromFirebase()
+            }
+        }
+    // eslint-disable-next-line
+    }, [addTask, user])
 
     var tasksToDisplay;
 
@@ -41,7 +67,6 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
     }else{
         tasksToDisplay = tasksByCategory
     }
-    
 
     return(
         <Holder type='Global'>
@@ -52,6 +77,7 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
                     categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
                     : null
                 }
+                <CategoryAdd user={user} />
             </Holder>
             <Holder type='Tasks'>
                 <TaskHeader />
@@ -76,7 +102,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     setCategory: category => dispatch(SetCurrentCategory(category)),
-    addTask: task => dispatch(AddTask(task))
+    addTask: task => dispatch(AddTask(task)),
+    addCategory: category => dispatch(AddCategory(category))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalContainer);

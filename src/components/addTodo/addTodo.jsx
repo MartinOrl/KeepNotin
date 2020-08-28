@@ -36,7 +36,7 @@ class AddTodo extends React.Component{
 
     handleSubmit = async event => {
         event.preventDefault()
-        const { addTodo, category } = this.props;
+        const { addTodo, category, user } = this.props;
 
         const newTask = {
             id: uid(9),
@@ -48,7 +48,7 @@ class AddTodo extends React.Component{
         }
 
         addTodo(newTask)
-
+        addTaskToDatabase(user, newTask)
         this.setState({
             title: '',
             priority: '',
@@ -62,7 +62,7 @@ class AddTodo extends React.Component{
     render(){
         return(
             <ComponentContainer>
-                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})}><p>+</p></TaskAddToggle>
+                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})} active={this.state.visibility} >+</TaskAddToggle>
                 <TaskAddContainer visibility={this.state.visibility ? true : false} >
                     <Title>Add Todo</Title>
                     <TaskForm onSubmit={this.handleSubmit}>

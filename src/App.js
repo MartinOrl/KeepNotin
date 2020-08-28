@@ -13,35 +13,57 @@ import Main from './pages/Main';
 import { selectCurrentUser } from './redux/user/userSelectors';
 import { setCurrentUser} from './redux/user/userActions';
 
-import { AddTask, AddCategory } from './redux/tasks/taskActions';
+import { AddCategory } from './redux/tasks/taskActions';
 
-import { TestCategories, TestTasks } from './testSuite'
+import { TestCategories } from './testSuite'
+
+import Spinner from './components/spinner/spinner'
+
+const SpinnerContainer = () => {
+  return(
+    <div style={{marginTop: '90px'}}>
+      <Spinner size='120px'/>
+    </div>
+  )
+}
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
+  constructor(){
+    super()
+
+    this.state = {
+      loggingIn: false
+    }
+  }
 
   componentDidMount(){
-    const { setUser, addCategories, addTask } = this.props
+    const { setUser, addCategories } = this.props
     addCategories(TestCategories)
-    addTask(TestTasks)
-    setUser({id: 'lol'})
     
-    if(process.env.NODE_ENV !== 'development'){
-      this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-        if(userAuth){
-          const userRef = await createUserProfile(userAuth);
-          userRef.onSnapshot(snapShot => {
-            setUser({
-              id: snapShot.id,
-              ...snapShot.data()
-            })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth){
+        console.log("User State has Changed")
+        this.setState({loggingIn: true})
+        const userRef = await createUserProfile(userAuth);
+        userRef.onSnapshot(snapShot => {
+          setUser({
+            id: snapShot.id,
+            ...snapShot.data()
           })
-        }
-        
-      })
+          this.setState({loggingIn: false})
+        })
       }
+      
+    })
+      
 }
-  
+  handleLogin = () => {
+    if(this.state.loggingIn){
+      return <SpinnerContainer />
+    }
+    return <SignIn />
+  }
 
   componentWillUnmount(){
     this.unsubscribeFromAuth();
@@ -53,7 +75,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route path="/" render={() =>
-              this.props.user ? (<Main />) : (<SignIn/>)
+              this.props.user ? (<Main />) : this.handleLogin()
           } />
         </Switch>
       </div>
@@ -68,7 +90,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setCurrentUser(user)),
   addCategories: categories => dispatch(AddCategory(categories)),
-  addTask: task => dispatch(AddTask(task))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
