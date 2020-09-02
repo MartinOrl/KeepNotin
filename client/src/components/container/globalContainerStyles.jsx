@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 const activeStyle = css`
     background: #f7f7f7;
@@ -138,23 +138,34 @@ export const CategoryTitle = styled.h1`
     font-size: 1.2rem;
 `
 
-const hasCollapsed = css`
-    height: 0;
-    overflow: hidden;
+const testCollapsed = keyframes`
+    0%{
+        height: 250px;
+    }
+    100%{
+        height: 0;
+        overflow: hidden;
+    }
 `
 
-const hasAppeared = css`
-    height: auto;
+const noTestCollapsed = keyframes`
+    0%{
+        height: 0;
+        overflow: hidden;
+    }
+    100%{
+        height: 250px;
+    }
 `
+
 
 const getCollapseStatus = ({collapse}) => {
     if(collapse){
-        return hasCollapsed
+        return testCollapsed
     }
-    return hasAppeared
+    return noTestCollapsed
 }
 
 export const CategoryInfoContainer = styled.div`
-    transition: 400ms ease-in-out;
-    ${getCollapseStatus}
+    animation: ${getCollapseStatus} 400ms forwards ease-in-out;
 `
