@@ -52,3 +52,31 @@ export const Submit = styled.button`
     background: none;
 
 `
+
+const isDarkMode = css`
+    ${Toggle}{
+        color: #e7eff6
+    }
+    ${Input}{
+        color: #e7eff6;
+        border-bottom: 1px solid #e7eff6;
+        &::placeholder{
+            color: rgba(255,255,255,.8)
+        }
+    }
+    ${Submit}{
+        border: 1px solid #e7eff6;
+        color: #e7eff6;
+    }
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode}
+`

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-
-import { Container, Toggle, Input, Form, Submit } from './addCategoryStyles'
+import { createStructuredSelector } from 'reselect'
+import { Container, Toggle, Input, Form, Submit, DarkMode } from './addCategoryStyles'
 import { AddCategory } from '../../redux/tasks/taskActions'
 import { connect } from 'react-redux'
 import { addCategoryToDatabase } from '../../redux/tasks/taskUtils'
+import { SelectMode } from '../../redux/display/displaySelectors'
 
-export const CategoryAdd = ({ addCategory, user }) => {
+export const CategoryAdd = ({ addCategory, user, dayMode }) => {
     const [display, setDisplay] = useState(false)
     const [value, setValue] = useState('')
 
@@ -24,24 +25,30 @@ export const CategoryAdd = ({ addCategory, user }) => {
     }
 
     return(
-        <Container>
-            <Toggle onClick={() => setDisplay(!display)} active={display}  >+</Toggle>
-            {
-                display
-                ?
-                <Form onSubmit={handleSubmit}>
-                    <Input required type='text' autoFocus={display ? 'true' : 'false'} onChange={handleChange} value={value} placeholder='New Category' />
-                    <Submit type='submit'>Add</Submit>
-                </Form>
-                :
-                null
-            }
-        </Container>
+        <DarkMode dayMode={dayMode}>
+            <Container>
+                <Toggle onClick={() => setDisplay(!display)} active={display}  >+</Toggle>
+                {
+                    display
+                    ?
+                    <Form onSubmit={handleSubmit}>
+                        <Input required type='text' autoFocus={display ? 'true' : 'false'} onChange={handleChange} value={value} placeholder='New Category' />
+                        <Submit type='submit'>Add</Submit>
+                    </Form>
+                    :
+                    null
+                }
+            </Container>
+        </DarkMode>
     )
 }
+
+const mapStateToProps = createStructuredSelector({
+    dayMode: SelectMode
+})
 
 const mapDispatchToProps = dispatch => ({
     addCategory: category => dispatch(AddCategory(category))
 })
 
-export default connect(null, mapDispatchToProps)(CategoryAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryAdd);

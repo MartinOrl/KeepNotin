@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
 import uid from 'uid'
 
-import { Holder, CategoryContainer, CategoryCollapse, CategoryTitle, CategoryInfoContainer } from './globalContainerStyles';
+import { DarkMode, CategoryContainer, CategoryCollapse, CategoryTitle, CategoryInfoContainer, CategoryHolder, TasksHolder, InfoHolder, GlobalHolder } from './globalContainerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 // eslint-disable-next-line
@@ -22,9 +22,10 @@ import { getTasksByCategory, getTasksBySearch } from '../../redux/tasks/taskUtil
 import { SetCurrentCategory, AddTask, AddCategory } from '../../redux/tasks/taskActions';
 
 import { TestTasks } from '../../testSuite'
+import { SelectMode } from '../../redux/display/displaySelectors';
 
 
-const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm, addCategory}) => {
+const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm, addCategory, dayMode}) => {
     const [collapse, setCollapse] = useState(false)
 
     const seedFromFirebase = () => {
@@ -62,29 +63,31 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
     }
 
     return(
-        <Holder type='Global'>
-            <Holder type='Category' collapse={collapse}>
-                <CategoryTitle>Categories</CategoryTitle>
-                    <CategoryInfoContainer collapse={collapse}>
-                    {
-                        categories 
-                        ? 
-                        categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
-                        : null
-                    }
-                    <CategoryAdd user={user} />
-                </CategoryInfoContainer>
-                <CategoryCollapse onClick={() => setCollapse(!collapse)} collapse={collapse} >&gt;</CategoryCollapse>
-            </Holder>
-            <Holder type='Tasks'>
-                <TaskHeader />
-                <TaskContainer tasks={tasksToDisplay} />
-                <AddTodo />
-            </Holder>
-            <Holder type='Info'>
-                Info Container Text
-            </Holder>
-        </Holder>
+        <DarkMode dayMode={dayMode}>
+            <GlobalHolder>
+                <CategoryHolder collapse={collapse}>
+                    <CategoryTitle>Categories</CategoryTitle>
+                        <CategoryInfoContainer collapse={collapse}>
+                        {
+                            categories 
+                            ? 
+                            categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
+                            : null
+                        }
+                        <CategoryAdd user={user} />
+                    </CategoryInfoContainer>
+                    <CategoryCollapse onClick={() => setCollapse(!collapse)} collapse={collapse} >&gt;</CategoryCollapse>
+                </CategoryHolder>
+                <TasksHolder>
+                    <TaskHeader />
+                    <TaskContainer tasks={tasksToDisplay} />
+                    <AddTodo />
+                </TasksHolder>
+                <InfoHolder>
+                    Info Container Text
+                </InfoHolder>
+            </GlobalHolder>
+        </DarkMode>
     )
 }
 
@@ -94,7 +97,8 @@ const mapStateToProps = createStructuredSelector({
     tasks: selectTasks,
     categories: selectCategories,
     currentCategory: selectCategory,
-    searchTerm: selectSearch
+    searchTerm: selectSearch,
+    dayMode: SelectMode
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,12 +1,17 @@
 import styled, { css } from 'styled-components'
 
+
+
+
 export const HeaderContainer = styled.div`
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
     padding: 8px 40px 8px 16px;
-    background: #0392cf;
+    transition: 300ms ease-in-out;
     justify-content: space-between;
+    background: #0392cf;
+    color: #e7eff6;
 `
 
 export const UserTools = styled.div`
@@ -128,4 +133,31 @@ export const ToggleContainer = styled.div`
     &:hover{
         cursor: pointer;
     }
+`
+
+const isDarkMode = css`
+    ${HeaderContainer}{
+        background: #1e1f26;
+        color: #e7eff6;
+    }
+    ${SearchBar}{
+        background: #ccc;
+    }
+    ${SearchInput}{
+        color: #1e1f26;
+    }
+    ${SearchIcon}{
+        color: #1e1f26;
+    }
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode}
 `

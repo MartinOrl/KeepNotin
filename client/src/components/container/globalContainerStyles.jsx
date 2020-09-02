@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from 'styled-components'
 
 const activeStyle = css`
+    color: #1e1f26 !important;
     background: #f7f7f7;
 `
 const noActive = css`
@@ -29,29 +30,19 @@ export const CategoryContainer = styled.div`
     ${getActive}
 `
 
-const GlobalHolderStyle = css`
-    display: flex;
-    flex-direction: row;
-    background: #e5e6eb;
-    transition: 300ms ease-in-out;
-    @media screen and (max-width: 875px){
-        flex-direction: column;
-    }
-`
-
 const BasicStyle = css`
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
 `
 
-
-
-const CategoryHolderStyle = css`
+export const CategoryHolder = styled.div`
+    ${BasicStyle};
     width: 17%;
-    height: 800px;
+    height: 917px;
     background: none;
     padding-top: 16px;
+    transition: 300ms ease-in-out;
     @media screen and (max-width: 875px){
         height: auto;
         text-align: center;
@@ -62,7 +53,8 @@ const CategoryHolderStyle = css`
     }
 `
 
-const TasksHolderStyle = css`
+export const TasksHolder = styled.div`
+    ${BasicStyle};
     width: 68%;
     margin-right: 16px;
     padding: 12px 40px;
@@ -74,7 +66,8 @@ const TasksHolderStyle = css`
     }
 `
 
-const InfoHolderStyle = css`
+export const InfoHolder = styled.div`
+    ${BasicStyle};
     width: 13%;
     height: 300px;
     margin-top: 10px;
@@ -85,26 +78,19 @@ const InfoHolderStyle = css`
     }
 `
 
-const getStyle = ({type}) => {
-    switch(type){
-        case 'Category':
-            return CategoryHolderStyle;
-        case 'Tasks':
-            return TasksHolderStyle;
-        case 'Info':
-            return InfoHolderStyle;
-        case 'Global':
-            return GlobalHolderStyle;
-        default:
-            return null;
-    }
-}
 
-
-export const Holder = styled.div`
+export const GlobalHolder = styled.div`
     ${BasicStyle};
-    ${getStyle}
+    display: flex;
+    flex-direction: row;
+    background: #e5e6eb;
+    transition: 300ms ease-in-out;
+    @media screen and (max-width: 875px){
+        flex-direction: column;
+    };
 `
+
+
 
 const isCollapsed = css`
     transform: rotate(90deg) translateY(-5px);
@@ -136,6 +122,7 @@ export const CategoryCollapse = styled.p`
 export const CategoryTitle = styled.h1`
     margin: 12px auto;
     font-size: 1.2rem;
+    transition: 300ms ease-in-out;
 `
 
 const testCollapsed = keyframes`
@@ -168,4 +155,35 @@ const getCollapseStatus = ({collapse}) => {
 
 export const CategoryInfoContainer = styled.div`
     animation: ${getCollapseStatus} 400ms forwards ease-in-out;
+`
+
+
+const isDarkMode = css`
+    ${CategoryHolder}{
+        background: #1e1f26;
+    }
+    ${CategoryTitle}{
+        color: #e7eff6;
+    }
+    ${CategoryContainer}{
+        color: #e7eff9;
+        &:hover{
+            color: #1e1f26;
+        }
+    }
+    ${CategoryCollapse}{
+        color: #e7eff6 !important;
+    }
+
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode}
 `
