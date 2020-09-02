@@ -45,6 +45,8 @@ const BasicStyle = css`
     box-sizing: border-box;
 `
 
+
+
 const CategoryHolderStyle = css`
     width: 17%;
     height: 800px;
@@ -104,3 +106,55 @@ export const Holder = styled.div`
     ${getStyle}
 `
 
+const isCollapsed = css`
+    transform: rotate(90deg) translateY(-5px);
+`
+
+const notCollapsed = css`
+    transform: rotate(-90deg) translateY(-5px);
+`
+
+const getCollapse = ({collapse}) => {
+    if(collapse){
+        return isCollapsed
+    }
+    return notCollapsed
+}
+
+export const CategoryCollapse = styled.p`
+    font-size: 32px;
+    display: none;
+    margin: 0 auto;
+    text-align: center;
+    transition: 300ms ease-in-out;
+    ${getCollapse};
+    @media screen and (max-width: 768px){
+        display: block;
+    }
+`
+
+export const CategoryTitle = styled.h1`
+    margin: 12px auto;
+    font-size: 1.2rem;
+`
+
+const hasCollapsed = css`
+    height: 0;
+    overflow: hidden;
+`
+
+const hasAppeared = css`
+    height: auto;
+`
+
+const getCollapseStatus = ({collapse}) => {
+    if(collapse){
+        return hasCollapsed
+    }
+    return hasAppeared
+}
+
+export const CategoryInfoContainer = styled.div`
+    transition: 400ms ease-in-out;
+    ${getCollapseStatus}
+`

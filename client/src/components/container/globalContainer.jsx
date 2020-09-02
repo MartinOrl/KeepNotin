@@ -1,11 +1,11 @@
 
 // eslint-disable-next-line
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
 import uid from 'uid'
 
-import { Holder, CategoryContainer } from './globalContainerStyles';
+import { Holder, CategoryContainer, CategoryCollapse, CategoryTitle, CategoryInfoContainer } from './globalContainerStyles';
 
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 // eslint-disable-next-line
@@ -25,14 +25,7 @@ import { TestTasks } from '../../testSuite'
 
 
 const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm, addCategory}) => {
-    // useEffect(() => {
-    //         var tasksRef = firestore.collection('users').doc(user.id).collection('tasks').doc('tasks')
-    //         tasksRef.get().then(doc => {
-    //             var tasksFromFirebase  = doc.data().tasks;
-    //             console.log(tasksFromFirebase)
-    //             addTask(tasksFromFirebase)
-    //         })
-    // }, [addTask, user])
+    const [collapse, setCollapse] = useState(false)
 
     const seedFromFirebase = () => {
         var taskRef = firestore.collection('users').doc(user.id).collection('tasks').doc('tasks')
@@ -70,14 +63,18 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
 
     return(
         <Holder type='Global'>
-            <Holder type='Category'>
-                {
-                    categories 
-                    ? 
-                    categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
-                    : null
-                }
-                <CategoryAdd user={user} />
+            <Holder type='Category' collapse={collapse}>
+                <CategoryTitle>Categories</CategoryTitle>
+                    <CategoryInfoContainer collapse={collapse}>
+                    {
+                        categories 
+                        ? 
+                        categories.map(category => (<CategoryContainer key={uid(2)} onClick={handleClick} active={category === currentCategory ? true : null} >{category}</CategoryContainer>))
+                        : null
+                    }
+                    <CategoryAdd user={user} />
+                </CategoryInfoContainer>
+                <CategoryCollapse onClick={() => setCollapse(!collapse)} collapse={collapse} >&gt;</CategoryCollapse>
             </Holder>
             <Holder type='Tasks'>
                 <TaskHeader />
