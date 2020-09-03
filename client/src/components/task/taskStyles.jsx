@@ -113,3 +113,36 @@ export const RemoveToggle = styled.div`
         cursor: pointer;
     }
 `
+
+const isDarkMode = css`
+    ${Complete}{
+        &:checked ~ ${Tick}{
+            background-color: #4b86b4
+        }
+    }
+    ${Title}{
+        color: #f8f8fa;
+    }
+    ${Text}{
+        color: #f8f8fa;
+        opacity: 0.7;
+    }
+    ${RemoveToggle}{
+        color: #f8f8fa;
+        &:hover{
+            color: #fe4a49;
+        }
+    }
+
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode}
+`

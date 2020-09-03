@@ -98,6 +98,11 @@ const display = css`
     border: 1px solid black;
     background: white;
     overflow: hidden;
+    right: 40px;
+    z-index: 1000;
+    @media screen and (max-width: 768px){
+        right: 200px;
+    };
 `
 
 const noDisplay = css`

@@ -21,12 +21,13 @@ import { selectTasks, selectCategory, selectCategories, selectSearch } from '../
 import { getTasksByCategory, getTasksBySearch } from '../../redux/tasks/taskUtils';
 import { SetCurrentCategory, AddTask, AddCategory } from '../../redux/tasks/taskActions';
 
-import { TestTasks } from '../../testSuite'
+import { TestTasks, TestCategories } from '../../testSuite'
 import { SelectMode } from '../../redux/display/displaySelectors';
 
 
 const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user, addTask, searchTerm, addCategory, dayMode}) => {
     const [collapse, setCollapse] = useState(false)
+    console.log(tasks.length)
 
     const seedFromFirebase = () => {
         var taskRef = firestore.collection('users').doc(user.id).collection('tasks').doc('tasks')
@@ -41,10 +42,16 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
     useEffect(() => {
         if(user.id){
             if(user.id === 'Demo'){
-                addTask(TestTasks)
+                if(tasks.length === 0){
+                    addTask(TestTasks)
+                    addCategory(TestCategories)
+                }
             }
             if(user.id.length > 16){
-                seedFromFirebase()
+                if(tasks.length === 0){
+                    seedFromFirebase()
+                }
+                
             }
         }
     // eslint-disable-next-line

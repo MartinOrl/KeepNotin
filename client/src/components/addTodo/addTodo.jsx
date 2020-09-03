@@ -3,15 +3,15 @@ import uid from 'uid';
 
 import { connect } from 'react-redux';
 
-import { ComponentContainer, TaskAddToggle, TaskAddContainer, TaskForm, FormInput, SubmitButton, Title, Selection  } from './addTodoStyles'
+import { DarkMode, ComponentContainer, TaskAddToggle, TaskAddContainer, TaskForm, FormInput, SubmitButton, Title, Selection  } from './addTodoStyles'
 
 import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/userSelectors';
 
 import { AddTask } from '../../redux/tasks/taskActions';
-// eslint-disable-next-line
 import { addTaskToDatabase } from '../../redux/tasks/taskUtils'
 import { selectCategory } from '../../redux/tasks/taskSelectors';
+import { SelectMode } from '../../redux/display/displaySelectors'
 
 
 class AddTodo extends React.Component{
@@ -61,32 +61,35 @@ class AddTodo extends React.Component{
 
     render(){
         return(
-            <ComponentContainer>
-                <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})} active={this.state.visibility} >+</TaskAddToggle>
-                <TaskAddContainer visibility={this.state.visibility ? true : false} >
-                    <Title>Add Todo</Title>
-                    <TaskForm onSubmit={this.handleSubmit}>
-                        <FormInput required type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
-                        <Selection onChange={this.handleChange} name='priority' value={this.state.priority}>
-                            <option value='' selected disable hidden>Priority</option>
-                            <option value='Low' >Low</option>
-                            <option value='Medium' >Medium</option>
-                            <option value='High' >High</option>
-                        </Selection>
-                        <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
-                        <SubmitButton type="submit" value="Add Todo">
-                        Add Todo
-                        </SubmitButton>
-                    </TaskForm>
-                </TaskAddContainer>
-            </ComponentContainer>
+            <DarkMode dayMode={this.props.dayMode}>
+                <ComponentContainer>
+                    <TaskAddToggle onClick={() => this.setState({visibility: !this.state.visibility})} active={this.state.visibility} >+</TaskAddToggle>
+                    <TaskAddContainer visibility={this.state.visibility ? true : false} >
+                        <Title>Add Todo</Title>
+                        <TaskForm onSubmit={this.handleSubmit}>
+                            <FormInput required type="text" name="title" value={this.state.title} onChange={this.handleChange}  placeholder="Title"/>
+                            <Selection onChange={this.handleChange} name='priority' value={this.state.priority}>
+                                <option value='' selected disable hidden>Priority</option>
+                                <option value='Low' >Low</option>
+                                <option value='Medium' >Medium</option>
+                                <option value='High' >High</option>
+                            </Selection>
+                            <FormInput required type="text" name="text" value={this.state.text} onChange={this.handleChange}  placeholder="Text"  />
+                            <SubmitButton type="submit" value="Add Todo">
+                            Add Todo
+                            </SubmitButton>
+                        </TaskForm>
+                    </TaskAddContainer>
+                </ComponentContainer>
+            </DarkMode>
         )
     }
 }
 
 const mapStateToProps = createStructuredSelector({
     user: selectCurrentUser,
-    category: selectCategory
+    category: selectCategory,
+    dayMode: SelectMode
 });
 
 const mapDispatchToProps = dispatch => ({

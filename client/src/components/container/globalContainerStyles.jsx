@@ -39,7 +39,7 @@ const BasicStyle = css`
 export const CategoryHolder = styled.div`
     ${BasicStyle};
     width: 17%;
-    height: 917px;
+    height: 95vh;
     background: none;
     padding-top: 16px;
     transition: 300ms ease-in-out;
@@ -73,6 +73,7 @@ export const InfoHolder = styled.div`
     margin-top: 10px;
     padding: 12px 40px;
     background: white;
+    transition: 400ms ease-in-out;
     @media screen and (max-width: 875px){
         display: none;
     }
@@ -173,6 +174,13 @@ const isDarkMode = css`
     }
     ${CategoryCollapse}{
         color: #e7eff6 !important;
+    }
+    ${TasksHolder}{
+        background: #283655;
+    }
+    ${InfoHolder}{
+        background: #283655;
+        color: #f8f8f4;
     }
 
 `

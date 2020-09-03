@@ -88,3 +88,28 @@ export const SortFiltersContainer = styled.div`
     margin: auto 0;
     position: relative;
 `
+
+const isDarkMode = css`
+    ${Title}{
+        color: #f8f8fa;
+    };
+    ${SortFilterToggle}{
+        color: #f8f8fa;
+    }
+    ${Chevron}{
+        color: #f8f8fa;
+    }
+
+
+`;
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode};
+`

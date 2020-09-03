@@ -13,10 +13,6 @@ import Main from './pages/Main';
 import { selectCurrentUser } from './redux/user/userSelectors';
 import { setCurrentUser} from './redux/user/userActions';
 
-import { AddCategory } from './redux/tasks/taskActions';
-
-import { TestCategories } from './testSuite'
-
 import Spinner from './components/spinner/spinner'
 
 const SpinnerContainer = () => {
@@ -38,8 +34,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    const { setUser, addCategories } = this.props
-    addCategories(TestCategories)
+    const { setUser} = this.props
     
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if(userAuth){
@@ -88,8 +83,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setCurrentUser(user)),
-  addCategories: categories => dispatch(AddCategory(categories)),
+  setUser: user => dispatch(setCurrentUser(user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 import { createStructuredSelector } from 'reselect'
 
-import { TaskHeaderContainer, Title, SortFilters, SortFilterToggle, Chevron, SortFiltersContainer, SortFilterToggleTitle } from './taskHeaderStyles'
+import { DarkMode, TaskHeaderContainer, Title, SortFilters, SortFilterToggle, Chevron, SortFiltersContainer, SortFilterToggleTitle } from './taskHeaderStyles'
 import { SetTasksFilter } from '../../redux/tasks/taskActions'
 import { selectCategory } from '../../redux/tasks/taskSelectors'
+import { SelectMode } from '../../redux/display/displaySelectors'
 
-
-const TaskHeader = ({setFilter, currentCategory}) => {
+const TaskHeader = ({setFilter, currentCategory, dayMode}) => {
     const [visibility, setVisibility] = useState(false)
 
     const handleClick = event => {
@@ -17,26 +17,29 @@ const TaskHeader = ({setFilter, currentCategory}) => {
     }
 
     return(
-    <TaskHeaderContainer>
-        <Title>{currentCategory}</Title>
-        <SortFiltersContainer>
-            <SortFilterToggle onClick={() => setVisibility(!visibility)} >
-                <SortFilterToggleTitle>Sort</SortFilterToggleTitle>
-                <Chevron visibility={visibility.toString()} >&gt;</Chevron>
-            </SortFilterToggle>
-            <SortFilters visibility={visibility.toString()}>
-                <ul>
-                    <li onClick={handleClick} type='Alphabet' >A-Z</li>
-                    <li onClick={handleClick} type='Alphabet Reverse' >Z-A</li>
-                    <li onClick={handleClick} type='Priority' >Priority</li>
-                </ul>
-            </SortFilters>
-        </SortFiltersContainer>
-    </TaskHeaderContainer>
+        <DarkMode dayMode={dayMode}>
+            <TaskHeaderContainer>
+                <Title>{currentCategory}</Title>
+                <SortFiltersContainer>
+                    <SortFilterToggle onClick={() => setVisibility(!visibility)} >
+                        <SortFilterToggleTitle>Sort</SortFilterToggleTitle>
+                        <Chevron visibility={visibility.toString()} >&gt;</Chevron>
+                    </SortFilterToggle>
+                    <SortFilters visibility={visibility.toString()}>
+                        <ul>
+                            <li onClick={handleClick} type='Alphabet' >A-Z</li>
+                            <li onClick={handleClick} type='Alphabet Reverse' >Z-A</li>
+                            <li onClick={handleClick} type='Priority' >Priority</li>
+                        </ul>
+                    </SortFilters>
+                </SortFiltersContainer>
+            </TaskHeaderContainer>
+        </DarkMode>
 )}
 
 const mapStateToProps = createStructuredSelector({
-    currentCategory: selectCategory
+    currentCategory: selectCategory,
+    dayMode: SelectMode
 })
 
 const mapDispatchToProps = dispatch => ({

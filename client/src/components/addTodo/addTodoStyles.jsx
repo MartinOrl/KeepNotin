@@ -179,3 +179,21 @@ export const Selection = styled.select`
         margin: 15px auto;
     }
 `
+
+const isDarkMode = css`
+    ${TaskAddToggle}{
+        background: #051e3e;
+    }
+
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    ${getMode}
+`
