@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom'

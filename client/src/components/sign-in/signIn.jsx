@@ -54,7 +54,7 @@ class SignIn extends React.Component {
                 <LoginForm onSubmit={this.handleSubmit}>
                     <FormInput type="email" name="email" onChange={this.handleChange} value={this.state.userName} placeholder='Email'  />
                     <FormInput type="password" name="password" onChange={this.handleChange} value={this.state.password} placeholder='Password'  />
-                    <SubmitButton type="submit" value="Log In" />
+                    <SubmitButton type="submit" value="Log In" /> 
                 </LoginForm>
                 <Guest onClick={this.loginAsGuest} >Enter as Guest</Guest>
                 <Demo onClick={this.loginDemo} >Demo Version</Demo>

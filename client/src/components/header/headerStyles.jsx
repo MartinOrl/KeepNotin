@@ -27,6 +27,9 @@ export const Title = styled.h1`
     font-weight: 400;
     color: #e7eff6;
     margin-left: 20px;
+    &:hover{
+        cursor: pointer;
+    };
     @media screen and (max-width: 875px){
         width: 100%;
         text-align: center;

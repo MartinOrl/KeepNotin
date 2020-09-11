@@ -40,7 +40,9 @@ export const createUserProfile = async (userAuth, additionalData) => {
 
 export const auth = firebase.auth()
 
+
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+
 
 export const firestore = firebase.firestore()
 

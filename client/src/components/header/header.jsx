@@ -12,8 +12,9 @@ import { LogOut } from '../../redux/user/userActions';
 import { auth } from '../../firebase/firebase';
 import { SetMode } from '../../redux/display/displayActions';
 import { SelectMode } from '../../redux/display/displaySelectors'
+import { SetPage } from '../../redux/page/pageActions';
 
-const Header = ({setFilter, user, logOut, setMode, dayMode}) => {
+const Header = ({setFilter, user, logOut, setMode, dayMode, setPage}) => {
     const [visibility, setVisibility] = useState(false)
 
     const handleChange = event => {
@@ -37,10 +38,10 @@ const Header = ({setFilter, user, logOut, setMode, dayMode}) => {
     return (
         <DarkMode dayMode={dayMode}>
             <HeaderContainer>
-                <Title>To-Do</Title>
+                <Title onClick={() => setPage("Home")}>To-Do</Title>
                 <SearchBar>
                     <SearchIcon src={search} />
-                    <SearchInput placeholder="Search" onChange={handleChange}  />
+                    <SearchInput type='text' placeholder="Search" onChange={handleChange}  />
                 </SearchBar>
                 <UserTools>
                     <ToggleContainer onClick={() => setVisibility(!visibility)}>
@@ -48,10 +49,9 @@ const Header = ({setFilter, user, logOut, setMode, dayMode}) => {
                         <Chevron visibility={visibility} >&gt;</Chevron>
                     </ToggleContainer>
                     <UserOptions visibility={visibility} >
-                        <Option>My Profile</Option>
-                        <Option>Settings</Option>
-                        <Option onClick={setMode} >Set Mode</Option>
-                        <Option onClick={SignOut} >Log Out</Option>
+                        <Option onClick={() => {setVisibility(false); setPage("My Profile")}}>My Profile</Option>
+                        <Option onClick={() => {setMode(); setVisibility(false)}} >Dark Mode</Option>
+                        <Option onClick={() => {SignOut(); setVisibility(false)}} >Log Out</Option>
                     </UserOptions>
                 </UserTools>
             </HeaderContainer>
@@ -67,7 +67,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     setFilter: filter => dispatch(setSeachTerm(filter)),
     logOut: () => dispatch(LogOut()),
-    setMode: () => dispatch(SetMode())
+    setMode: () => dispatch(SetMode()),
+    setPage: page => dispatch(SetPage(page))
 })
 
 

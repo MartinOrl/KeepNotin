@@ -47,6 +47,11 @@ const GlobalContainer = ({categories, currentCategory, tasks, setCategory, user,
                     addCategory(TestCategories)
                 }
             }
+            if(user.id === 'Guest'){
+                if(tasks.length === 0){
+                    addCategory(TestCategories)
+                }
+            }
             if(user.id.length > 16){
                 if(tasks.length === 0){
                     seedFromFirebase()
