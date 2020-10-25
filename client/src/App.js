@@ -2,6 +2,7 @@ import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom'
+import styled from 'styled-components'
 
 import SignIn from './components/sign-in/signIn';
 
@@ -13,6 +14,7 @@ import { selectCurrentUser } from './redux/user/userSelectors';
 import { setCurrentUser} from './redux/user/userActions';
 
 import Spinner from './components/spinner/spinner'
+import { SelectMode } from './redux/display/displaySelectors';
 
 const SpinnerContainer = () => {
   return(
@@ -21,6 +23,11 @@ const SpinnerContainer = () => {
     </div>
   )
 }
+
+const DarkMode = styled.div`
+  background: ${props => !props.dayMode ? '#072540' : '#eee'} !important;
+  min-height: 100vh;
+`
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -66,19 +73,20 @@ class App extends React.Component {
   render(){
 
     return(
-      <div>
+      <DarkMode dayMode={this.props.dayMode}>
         <Switch>
           <Route path="/" render={() =>
               this.props.user ? (<Main />) : this.handleLogin()
           } />
         </Switch>
-      </div>
+      </DarkMode>
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   user: selectCurrentUser,
+  dayMode: SelectMode
 })
 
 const mapDispatchToProps = dispatch => ({

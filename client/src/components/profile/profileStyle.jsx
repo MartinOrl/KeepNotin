@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const GlobalContainer = styled.div`
     width: 90%;
@@ -84,4 +84,32 @@ export const DeleteAccount = styled.button`
         color: black;
         cursor: pointer;
     }
+`
+
+const isDarkMode = css`
+    ${GlobalContainer}{
+        background: #283655;
+        & *{
+            color: #f8f8f4;
+        }
+    }
+    ${DeleteAccount}{
+        color: red;
+        &:hover{
+            color: black;
+        }
+    }
+`
+
+const getMode = ({dayMode}) => {
+    if(!dayMode){
+        return isDarkMode
+    }
+    return ''
+}
+
+export const DarkMode = styled.div`
+    height: 100%;
+    width: 100%;
+    ${getMode}
 `

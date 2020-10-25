@@ -182,6 +182,9 @@ const isDarkMode = css`
         background: #283655;
         color: #f8f8f4;
     }
+    ${GlobalHolder}{
+        background: #072540;
+    }
 
 `
 
